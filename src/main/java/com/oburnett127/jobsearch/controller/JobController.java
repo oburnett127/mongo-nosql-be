@@ -44,12 +44,13 @@ public class JobController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Job> makeEdit(@Validated @RequestBody EditRequest editRequest) throws IOException {
+    public ResponseEntity<Job> editJob(@Validated @RequestBody EditRequest editRequest) throws IOException {
+        final var id = editRequest.getId();
         final var title = editRequest.getTitle();
         final var employerId = editRequest.getEmployerId();
         final var desc = editRequest.getDesc();
         final var postDate = editRequest.getPostDate();
-        final var result = service.edit(title, employerId, desc, postDate);
+        final var result = service.editJob(title, employerId, desc, postDate);
         return ResponseEntity.ok().body(result);
     }
 }

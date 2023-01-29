@@ -21,8 +21,9 @@ import javax.persistence.Table;
 public class Job {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
-        private long title;
+        private final int id;
+        private String title;
         private final String employerId;
-        private final String desc;
-        private final String postDate;
+        private String desc;
+        private String postDate;
 }

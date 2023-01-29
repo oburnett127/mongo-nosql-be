@@ -1,49 +1,52 @@
 package com.oburnett127.jobsearch.service;
 
+import com.oburnett127.jobsearch.exception.InvalidEditException;
 import com.oburnett127.jobsearch.repository.JobRepository;
 import com.oburnett127.jobsearch.model.Job;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.*;
-import org.springframework.util.StringUtils;
 
 @Service
 @Slf4j
 public class JobService {
-    @Autowired
     private final JobRepository jobRepository;
-    @Autowired
-    private final JobValidator jobValidator;
+
+    public JobService(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
 
     public List<Job> listAll() {
-        return this.JobRepository.getAll();
+        return this.jobRepository.findAll();
     }
 
     @SneakyThrows
-    public Job getJob(final int id) {
-        final var job = JobRepository.getJob(id);
+    public Job getJob(final long id) {
+        final var job = this.jobRepository.getReferenceById(id);
         return job;
     }
 
     public void createJob(Job job) {
-        this.JobRepository.create(job);
+        this.jobRepository.save(job);
     }
 
     @SneakyThrows
-    public Job editJob(int id, String title, int employerId, String desc, Date postDate) {
-        final var job = JobRepository.getJob(id);
+    public Job editJob(long id, String title, long employerId, String desc, String postDate) {
+        final var job = this.jobRepository.getReferenceById(id);
 
         if(title.isBlank() || title == null || !title.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$")
             || desc.isBlank() || desc == null) {
             throw new InvalidEditException();
         }
 
-        JobRepository.save(job);
+        job.setTitle(title);
+        job.setDesc(desc);
+        this.jobRepository.save(job);
         return job;
     }
+
+    public void deleteJob(long id) { this.jobRepository.deleteById(id); }
 }

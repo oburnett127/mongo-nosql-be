@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,9 +19,9 @@ import javax.persistence.Table;
 public class Job {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
-        private final int id;
+        private long id;
         private String title;
-        private final String employerId;
+        private long employerId;
         private String desc;
         private String postDate;
 }

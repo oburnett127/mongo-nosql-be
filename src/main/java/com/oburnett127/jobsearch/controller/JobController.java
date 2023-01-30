@@ -38,21 +38,21 @@ public class JobController {
         final var job = Job.builder()
                 .title(createJobRequest.getTitle())
                 .employerId(createJobRequest.getEmployerId())
-                .desc(createJobRequest.getDesc())
+                .description(createJobRequest.getDescription())
                 .postDate(LocalDate.now().toString())
                 .build();
         service.createJob(job);
         return ResponseEntity.ok(job);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/edit")
     public ResponseEntity<Job> editJob(@Validated @RequestBody EditRequest editRequest) throws IOException {
         final var id = editRequest.getId();
         final var title = editRequest.getTitle();
         final var employerId = editRequest.getEmployerId();
-        final var desc = editRequest.getDesc();
+        final var description = editRequest.getDescription();
         final var postDate = editRequest.getPostDate();
-        final var result = service.editJob(id, title, employerId, desc, postDate);
+        final var result = service.editJob(id, title, employerId, description, postDate);
         return ResponseEntity.ok().body(result);
     }
 

@@ -6,5 +6,5 @@ import lombok.Data;
 public class CreateRequest {
     private String title;
     private int employerId;
-    private String desc;
+    private String description;
 }

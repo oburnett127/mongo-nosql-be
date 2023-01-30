@@ -7,6 +7,6 @@ public class EditRequest {
     private int id;
     private String title;
     private int employerId;
-    private String desc;
+    private String description;
     private String postDate;
 }

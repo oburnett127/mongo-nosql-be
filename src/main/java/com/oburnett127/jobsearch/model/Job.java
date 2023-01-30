@@ -1,14 +1,12 @@
 package com.oburnett127.jobsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Data
 @Builder
@@ -16,12 +14,15 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "job")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Job {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
         private int id;
         private String title;
+        @Column(name = "employer_id")
         private int employerId;
-        private String desc;
+        private String description;
+        @Column(name = "post_date")
         private String postDate;
 }

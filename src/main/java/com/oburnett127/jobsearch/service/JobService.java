@@ -34,16 +34,16 @@ public class JobService {
     }
 
     @SneakyThrows
-    public Job editJob(int id, String title, int employerId, String desc, String postDate) {
+    public Job editJob(int id, String title, int employerId, String description, String postDate) {
         final var job = this.jobRepository.getById(id);
 
-        if(title.isBlank() || title == null || !title.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$")
-            || desc.isBlank() || desc == null) {
+        if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9]*$")
+            || description.isBlank() || description == null) {
             throw new InvalidEditException();
         }
 
         job.setTitle(title);
-        job.setDesc(desc);
+        job.setDescription(description);
         this.jobRepository.save(job);
         return job;
     }

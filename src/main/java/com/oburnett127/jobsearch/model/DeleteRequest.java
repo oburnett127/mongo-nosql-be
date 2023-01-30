@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DeleteRequest {
-    private long id;
+    private int id;
 }

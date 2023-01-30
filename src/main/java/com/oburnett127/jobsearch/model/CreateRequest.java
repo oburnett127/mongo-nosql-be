@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CreateRequest {
     private String title;
-    private long employerId;
+    private int employerId;
     private String desc;
 }

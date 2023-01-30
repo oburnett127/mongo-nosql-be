@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class EditRequest {
-    private long id;
+    private int id;
     private String title;
-    private long employerId;
+    private int employerId;
     private String desc;
     private String postDate;
 }

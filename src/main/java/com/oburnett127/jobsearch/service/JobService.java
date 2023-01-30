@@ -24,8 +24,8 @@ public class JobService {
     }
 
     @SneakyThrows
-    public Job getJob(final long id) {
-        final var job = this.jobRepository.getReferenceById(id);
+    public Job getJob(final int id) {
+        final var job = this.jobRepository.getById(id);
         return job;
     }
 
@@ -34,8 +34,8 @@ public class JobService {
     }
 
     @SneakyThrows
-    public Job editJob(long id, String title, long employerId, String desc, String postDate) {
-        final var job = this.jobRepository.getReferenceById(id);
+    public Job editJob(int id, String title, int employerId, String desc, String postDate) {
+        final var job = this.jobRepository.getById(id);
 
         if(title.isBlank() || title == null || !title.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]+$")
             || desc.isBlank() || desc == null) {
@@ -48,5 +48,5 @@ public class JobService {
         return job;
     }
 
-    public void deleteJob(long id) { this.jobRepository.deleteById(id); }
+    public void deleteJob(int id) { this.jobRepository.deleteById(id); }
 }

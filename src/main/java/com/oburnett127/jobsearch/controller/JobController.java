@@ -1,5 +1,6 @@
 package com.oburnett127.jobsearch.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.oburnett127.jobsearch.model.*;
 import com.oburnett127.jobsearch.service.JobService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,10 @@ public class JobController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Job> getJob(@Validated @RequestBody GetRequest jobRequest) {
-        final var job = service.getJob(jobRequest.getId());
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Job> getJob(@Validated @PathVariable String id) {
+        System.out.println("inside getJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final var job = service.getJob(Integer.parseInt(id));
         return ResponseEntity.ok().body(job);
     }
 
@@ -45,9 +47,8 @@ public class JobController {
         return ResponseEntity.ok(job);
     }
 
-    @PostMapping("/edit")
-    public ResponseEntity<Job> editJob(@Validated @RequestBody EditRequest editRequest) throws IOException {
-        final var id = editRequest.getId();
+    @PostMapping("/edit/{id}")
+    public ResponseEntity<Job> editJob(@Validated @PathVariable int id, @RequestBody EditRequest editRequest) throws IOException {
         final var title = editRequest.getTitle();
         final var employerId = editRequest.getEmployerId();
         final var description = editRequest.getDescription();
@@ -56,9 +57,8 @@ public class JobController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<Job> deleteJob(@Validated @RequestBody DeleteRequest deleteRequest) throws IOException {
-        final var id = deleteRequest.getId();
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<Job> deleteJob(@Validated @PathVariable int id) throws IOException {
         service.deleteJob(id);
         return ResponseEntity.ok().body(null);
     }

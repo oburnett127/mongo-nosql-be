@@ -24,7 +24,7 @@ public class JobService {
     }
 
     @SneakyThrows
-    public Job getJob(final int id) {
+    public Job getJob(int id) {
         final var job = this.jobRepository.getById(id);
         return job;
     }

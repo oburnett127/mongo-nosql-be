@@ -1,28 +1,38 @@
 package com.oburnett127.jobsearch.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import org.hibernate.Hibernate;
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "job")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Job {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
         private int id;
         private String title;
-        @Column(name = "employer_id")
         private int employerId;
         private String description;
-        @Column(name = "post_date")
         private String postDate;
+
+        @Override
+        public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o != null) {
+                        Hibernate.getClass(this);
+                        Hibernate.getClass(o);
+                }
+                return false;
+        }
+
+        @Override
+        public int hashCode() {
+                return getClass().hashCode();
+        }
 }

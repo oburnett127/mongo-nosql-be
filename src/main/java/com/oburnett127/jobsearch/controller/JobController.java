@@ -14,7 +14,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/job")
-@Slf4j
 public class JobController {
     private final JobService service;
 
@@ -29,15 +28,15 @@ public class JobController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Job> getJob(@Validated @PathVariable String id, final HttpServletResponse response) {
+    public ResponseEntity<Job> getJob(@Validated @PathVariable String id) {
         System.out.println("inside getJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var job = service.getJob(Integer.parseInt(id));
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return ResponseEntity.ok().body(job);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Job> createJob(@Validated @RequestBody CreateRequest createJobRequest) throws IOException {
+    public ResponseEntity<Job> createJob(@Validated @RequestBody JobCreateRequest createJobRequest) throws IOException {
+        System.out.println("inside createJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var job = Job.builder()
                 .title(createJobRequest.getTitle())
                 .employerId(createJobRequest.getEmployerId())
@@ -48,18 +47,17 @@ public class JobController {
         return ResponseEntity.ok(job);
     }
 
-    @PostMapping("/edit/{id}")
-    public ResponseEntity<Job> editJob(@Validated @PathVariable int id, @RequestBody EditRequest editRequest) throws IOException {
-        final var title = editRequest.getTitle();
-        final var employerId = editRequest.getEmployerId();
-        final var description = editRequest.getDescription();
-        final var postDate = editRequest.getPostDate();
-        final var result = service.editJob(id, title, employerId, description, postDate);
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Job> updateJob(@Validated @PathVariable int id, @RequestBody JobUpdateRequest jobUpdateRequest) throws IOException {
+        System.out.println("inside updateJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        jobUpdateRequest.setId(id);
+        final var result = service.updateJob(jobUpdateRequest);
         return ResponseEntity.ok().body(result);
     }
 
     @PostMapping("/delete/{id}")
     public ResponseEntity<Job> deleteJob(@Validated @PathVariable int id) throws IOException {
+        System.out.println("inside deleteJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         service.deleteJob(id);
         return ResponseEntity.ok().body(null);
     }

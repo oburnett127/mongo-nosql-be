@@ -3,7 +3,8 @@ package com.oburnett127.jobsearch.model;
 import lombok.Data;
 
 @Data
-public class EditRequest {
+public class JobUpdateRequest {
+    private int id;
     private String title;
     private int employerId;
     private String description;

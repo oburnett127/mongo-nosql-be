@@ -1,13 +1,13 @@
 package com.oburnett127.jobsearch.service;
 
-import com.oburnett127.jobsearch.exception.InvalidEditException;
+import com.oburnett127.jobsearch.exception.InvalidUpdateException;
+import com.oburnett127.jobsearch.model.JobUpdateRequest;
 import com.oburnett127.jobsearch.repository.JobRepository;
 import com.oburnett127.jobsearch.model.Job;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,12 +34,16 @@ public class JobService {
     }
 
     @SneakyThrows
-    public Job editJob(int id, String title, int employerId, String description, String postDate) {
+    public Job updateJob(JobUpdateRequest jobUpdateRequest) {
+        final var id = jobUpdateRequest.getId();
+        final var title = jobUpdateRequest.getTitle();
+        final var description = jobUpdateRequest.getDescription();
+
         final var job = this.jobRepository.getById(id);
 
         if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9]*$")
             || description.isBlank() || description == null) {
-            throw new InvalidEditException();
+            throw new InvalidUpdateException();
         }
 
         job.setTitle(title);

@@ -12,18 +12,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "account")
-public class Account {
+@Table(name = "employer")
+public class Employer {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Basic(optional = false)
-    private String email;
-    @Basic(optional = false)
-    private String password;
-    @Basic(optional = false)
-    private boolean isAdmin;
+    private String name;
 
     @Override
     public boolean equals(Object o) {

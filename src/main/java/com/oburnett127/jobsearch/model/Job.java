@@ -16,9 +16,13 @@ public class Job {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
         private int id;
+        @Basic(optional = false)
         private String title;
+        @Basic(optional = false)
         private int employerId;
+        @Basic(optional = false)
         private String description;
+        @Basic(optional = false)
         private String postDate;
 
         @Override

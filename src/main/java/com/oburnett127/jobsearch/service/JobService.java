@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Slf4j
 public class JobService {
     private final JobRepository jobRepository;
 
@@ -41,7 +40,7 @@ public class JobService {
 
         final var job = this.jobRepository.getById(id);
 
-        if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9]*$")
+        if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9 ]*$")
             || description.isBlank() || description == null) {
             throw new InvalidUpdateException();
         }

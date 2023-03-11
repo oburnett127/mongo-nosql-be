@@ -35,12 +35,12 @@ public class JobController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Job> createJob(@Validated @RequestBody JobCreateRequest createJobRequest) throws IOException {
+    public ResponseEntity<Job> createJob(@Validated @RequestBody JobCreateRequest jobCreateRequest) throws IOException {
         System.out.println("inside createJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var job = Job.builder()
-                .title(createJobRequest.getTitle())
-                .employerId(createJobRequest.getEmployerId())
-                .description(createJobRequest.getDescription())
+                .title(jobCreateRequest.getTitle())
+                .employerId(jobCreateRequest.getEmployerId())
+                .description(jobCreateRequest.getDescription())
                 .postDate(LocalDate.now().toString())
                 .build();
         service.createJob(job);

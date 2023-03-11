@@ -18,8 +18,10 @@ public class Job {
         private int id;
         @Basic(optional = false)
         private String title;
-        @Basic(optional = false)
-        private int employerId;
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "employer_id")
+        private Employer employer;
         @Basic(optional = false)
         private String description;
         @Basic(optional = false)

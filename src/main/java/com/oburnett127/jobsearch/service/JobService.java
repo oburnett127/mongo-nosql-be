@@ -1,11 +1,9 @@
 package com.oburnett127.jobsearch.service;
 
-import com.oburnett127.jobsearch.exception.InvalidUpdateException;
 import com.oburnett127.jobsearch.model.JobUpdateRequest;
 import com.oburnett127.jobsearch.repository.JobRepository;
 import com.oburnett127.jobsearch.model.Job;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +40,7 @@ public class JobService {
 
         if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9 ]*$")
             || description.isBlank() || description == null) {
-            throw new InvalidUpdateException();
+            throw new RuntimeException("The title cannot be blank nor contain non-alphanumeric characters. The description cannot be blank.");
         }
 
         job.setTitle(title);

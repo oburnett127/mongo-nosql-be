@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,16 +23,26 @@ public class JobController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Job>> view() {
-        final var result = service.listAll();
+    public ResponseEntity<List<JobDto>> view() {
+        List<Job> jobs = service.listAll();
+
+        var result = jobs.stream()
+                .map(job -> new JobDto(job.getId(), job.getTitle(), job.getDescription(),
+                        job.getPostDate(), job.getEmployer().getName()))
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Job> getJob(@Validated @PathVariable String id) {
+    public ResponseEntity<JobDto> getJob(@Validated @PathVariable String id) {
         System.out.println("inside getJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var job = service.getJob(Integer.parseInt(id));
-        return ResponseEntity.ok().body(job);
+
+        var result = new JobDto(job.getId(), job.getTitle(), job.getDescription(),
+                        job.getPostDate(), job.getEmployer().getName());
+
+        return ResponseEntity.ok().body(result);
     }
 
     @PostMapping("/create")
@@ -39,7 +50,7 @@ public class JobController {
         System.out.println("inside createJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var job = Job.builder()
                 .title(jobCreateRequest.getTitle())
-                .employerId(jobCreateRequest.getEmployerId())
+                .employer(jobCreateRequest.getEmployer())
                 .description(jobCreateRequest.getDescription())
                 .postDate(LocalDate.now().toString())
                 .build();

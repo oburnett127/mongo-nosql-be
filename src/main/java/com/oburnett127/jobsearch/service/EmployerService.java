@@ -1,6 +1,5 @@
 package com.oburnett127.jobsearch.service;
 
-import com.oburnett127.jobsearch.exception.InvalidUpdateException;
 import com.oburnett127.jobsearch.model.Employer;
 import com.oburnett127.jobsearch.model.EmployerUpdateRequest;
 import com.oburnett127.jobsearch.repository.EmployerRepository;

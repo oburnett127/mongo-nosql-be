@@ -5,12 +5,10 @@ import com.oburnett127.jobsearch.model.AccountCreateRequest;
 import com.oburnett127.jobsearch.model.AccountUpdateRequest;
 import com.oburnett127.jobsearch.repository.AccountRepository;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Slf4j
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -25,7 +23,7 @@ public class AccountService {
     
     @SneakyThrows
     public Account getAccount(final int id) {
-        final var account = accountRepository.getById(id);
+        final var account = accountRepository.getReferenceById(id);
         return account;
     }
     
@@ -42,7 +40,7 @@ public class AccountService {
     
     @SneakyThrows
     public Account updateAccount(AccountUpdateRequest accountUpdateRequest) {
-        final var account = accountRepository.getById(accountUpdateRequest.getId());
+        final var account = accountRepository.getReferenceById(accountUpdateRequest.getId());
         account.setEmail(accountUpdateRequest.getEmail());
         account.setPassword(accountUpdateRequest.getPassword());
         this.accountRepository.save(account);

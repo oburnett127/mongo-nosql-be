@@ -2,8 +2,12 @@ package com.oburnett127.jobsearch.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
-import javax.persistence.*;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Getter
 @Setter

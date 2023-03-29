@@ -22,7 +22,7 @@ public class EmployerService {
 
     @SneakyThrows
     public Employer getEmployer(int id) {
-        final var employer = this.employerRepository.getById(id);
+        final var employer = this.employerRepository.getReferenceById(id);
         return employer;
     }
 
@@ -35,7 +35,7 @@ public class EmployerService {
         final var id = employerUpdateRequest.getId();
         final var name = employerUpdateRequest.getName();
 
-        final var employer = this.employerRepository.getById(id);
+        final var employer = this.employerRepository.getReferenceById(id);
 
         if(name.isBlank() || name == null || !name.matches("^[a-zA-Z0-9 ]*$")) {
             throw new RuntimeException("The employer name cannot be blank nor contain non-alphanumeric characters.");

@@ -22,7 +22,7 @@ public class JobService {
 
     @SneakyThrows
     public Job getJob(int id) {
-        final var job = this.jobRepository.getById(id);
+        final var job = this.jobRepository.getReferenceById(id);
         return job;
     }
 
@@ -36,7 +36,7 @@ public class JobService {
         final var title = jobUpdateRequest.getTitle();
         final var description = jobUpdateRequest.getDescription();
 
-        final var job = this.jobRepository.getById(id);
+        final var job = this.jobRepository.getReferenceById(id);
 
         if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9 ]*$")
             || description.isBlank() || description == null) {

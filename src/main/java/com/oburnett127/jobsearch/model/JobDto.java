@@ -1,9 +1,6 @@
 package com.oburnett127.jobsearch.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
-
-import javax.persistence.*;
 
 @Data
 @AllArgsConstructor

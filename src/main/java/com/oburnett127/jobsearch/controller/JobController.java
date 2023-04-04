@@ -2,6 +2,8 @@ package com.oburnett127.jobsearch.controller;
 
 import com.oburnett127.jobsearch.model.*;
 import com.oburnett127.jobsearch.service.JobService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/job")
 public class JobController {
@@ -21,7 +22,7 @@ public class JobController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<JobDto>> view() {
+    public ResponseEntity<JobDto[]> view() {
         List<Job> jobs = service.listAll();
 
         var result = jobs.stream()
@@ -29,7 +30,14 @@ public class JobController {
                         job.getPostDate(), job.getEmployer().getName()))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(result);
+        JobDto[] jobArray = result.toArray(new JobDto[0]);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+        return new ResponseEntity<>(jobArray, headers, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")

@@ -2,7 +2,6 @@ package com.oburnett127.jobsearch.controller;
 
 import com.oburnett127.jobsearch.model.*;
 import com.oburnett127.jobsearch.service.JobService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,12 +31,7 @@ public class JobController {
 
         JobDto[] jobArray = result.toArray(new JobDto[0]);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-        return new ResponseEntity<>(jobArray, headers, HttpStatus.OK);
+        return new ResponseEntity<>(jobArray, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")

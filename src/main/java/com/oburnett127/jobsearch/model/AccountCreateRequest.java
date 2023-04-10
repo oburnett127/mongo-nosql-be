@@ -7,6 +7,6 @@ public class AccountCreateRequest {
     private int id;
     private String email;
     private String password;
-
     private Boolean isAdmin;
+    private Boolean isEmployer;
 }

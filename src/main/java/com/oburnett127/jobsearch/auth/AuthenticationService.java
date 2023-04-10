@@ -23,13 +23,25 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
 
   public AuthenticationResponse register(RegisterRequest request) {
-    var user = User.builder()
+    var user = new User();
+    if(request.getIsEmployer().equals(false)) {
+      user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
         .build();
+    } else {
+      user = User.builder()
+          .firstname(request.getFirstname())
+          .lastname(request.getLastname())
+          .email(request.getEmail())
+          .password(passwordEncoder.encode(request.getPassword()))
+          .role(Role.EMPLOYER)
+          .build();
+    }
+
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     saveUserToken(savedUser, jwtToken);

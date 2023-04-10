@@ -33,6 +33,7 @@ public class AccountService {
                 .email(accountCreateRequest.getEmail())
                 .password(accountCreateRequest.getPassword())
                 .isAdmin(accountCreateRequest.getIsAdmin())
+                .isEmployer(accountCreateRequest.getIsEmployer())
                 .build();
         this.accountRepository.save(account);
         return account;

@@ -28,6 +28,8 @@ public class Account {
     private String password;
     @Basic(optional = false)
     private boolean isAdmin;
+    @Basic(optional = false)
+    private boolean isEmployer;
 
     @Override
     public boolean equals(Object o) {

@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         .requestMatchers("/auth/**", "/job/**")
           .permitAll()
         .anyRequest()
-          .authenticated()
+          .permitAll()
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

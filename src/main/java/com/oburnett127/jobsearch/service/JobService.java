@@ -5,7 +5,9 @@ import com.oburnett127.jobsearch.repository.JobRepository;
 import com.oburnett127.jobsearch.model.Job;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 
 @Service
@@ -18,6 +20,20 @@ public class JobService {
 
     public List<Job> listAll() {
         return this.jobRepository.findAll();
+    }
+
+    public List<Job> findJobsWithSorting(String field){
+        return jobRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
+
+    public Page<Job> findJobsWithPagination(int offset, int pageSize){
+        Page<Job> jobs = jobRepository.findAll(PageRequest.of(offset, pageSize));
+        return jobs;
+    }
+
+    public Page<Job> findJobsWithPaginationAndSorting(int offset, int pageSize, String field){
+        Page<Job> jobs = jobRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));
+        return jobs;
     }
 
     @SneakyThrows

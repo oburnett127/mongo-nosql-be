@@ -3,5 +3,6 @@ package com.oburnett127.jobsearch.user;
 public enum Role {
 
   USER,
-  ADMIN
+  ADMIN,
+  EMPLOYER
 }

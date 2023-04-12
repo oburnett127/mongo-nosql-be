@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +24,15 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
 
   public AuthenticationResponse register(RegisterRequest request) {
+    //Check to see if account with email already exists
+    Optional<User> existingUser = repository.findByEmail(request.getEmail());
+    
+    if(existingUser.isPresent()) return null; 
+    
     var user = new User();
-    if(request.getIsEmployer().equals(false)) {
+
+    if(request.getIsEmployer() == false) {
+      System.out.println("role is: USER");
       user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
@@ -33,6 +41,7 @@ public class AuthenticationService {
         .role(Role.USER)
         .build();
     } else {
+      System.out.println("role is: EMPLOYER");
       user = User.builder()
           .firstname(request.getFirstname())
           .lastname(request.getLastname())

@@ -16,15 +16,15 @@ public class AuthenticationController {
 
   @PostMapping("/signup")
   public ResponseEntity<AuthenticationResponse> register(
-      @RequestBody RegisterRequest request
-  ) {
-    return ResponseEntity.ok(service.register(request));
+      @RequestBody RegisterRequest request) {
+    AuthenticationResponse response = service.register(request);
+    if(response == null) return ResponseEntity.status(409).body(new AuthenticationResponse(null));
+    else return ResponseEntity.status(200).body(response);
   }
 
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> authenticate(
-      @RequestBody AuthenticationRequest request
-  ) {
+      @RequestBody AuthenticationRequest request) {
     return ResponseEntity.ok(service.authenticate(request));
   }
 }

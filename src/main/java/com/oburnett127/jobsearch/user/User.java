@@ -1,11 +1,14 @@
 package com.oburnett127.jobsearch.user;
 
 import com.oburnett127.jobsearch.token.Token;
+
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -30,14 +33,18 @@ public class User implements UserDetails {
   @Id
   @GeneratedValue
   private Integer id;
+  @Basic(optional = false)
   private String firstname;
+  @Basic(optional = false)
   private String lastname;
+  @Basic(optional = false)
   private String email;
+  @Basic(optional = false)
   private String password;
-
+  @Basic(optional = true)
+  private Integer employerId;
   @Enumerated(EnumType.STRING)
   private Role role;
-
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 

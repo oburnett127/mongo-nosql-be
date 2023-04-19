@@ -1,7 +1,9 @@
 package com.oburnett127.jobsearch.model;
 
 import lombok.*;
+
 import org.hibernate.Hibernate;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

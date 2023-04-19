@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployerService {
@@ -23,6 +24,12 @@ public class EmployerService {
     @SneakyThrows
     public Employer getEmployer(int id) {
         final var employer = this.employerRepository.getReferenceById(id);
+        return employer;
+    }
+
+    @SneakyThrows
+    public Optional<Employer> getEmployerByName(String employerName) {
+        final Optional<Employer> employer = this.employerRepository.findByName(employerName);
         return employer;
     }
 

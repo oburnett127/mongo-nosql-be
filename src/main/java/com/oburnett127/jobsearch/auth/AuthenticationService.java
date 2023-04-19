@@ -1,6 +1,8 @@
 package com.oburnett127.jobsearch.auth;
 
 import com.oburnett127.jobsearch.config.JwtService;
+import com.oburnett127.jobsearch.model.Employer;
+import com.oburnett127.jobsearch.service.EmployerService;
 import com.oburnett127.jobsearch.token.Token;
 import com.oburnett127.jobsearch.token.TokenRepository;
 import com.oburnett127.jobsearch.token.TokenType;
@@ -22,6 +24,7 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final EmployerService employerService;
 
   public AuthenticationResponse register(RegisterRequest request) {
     //Check to see if account with email already exists
@@ -42,13 +45,24 @@ public class AuthenticationService {
         .build();
     } else {
       System.out.println("role is: EMPLOYER");
-      user = User.builder()
-          .firstname(request.getFirstname())
-          .lastname(request.getLastname())
-          .email(request.getEmail())
-          .password(passwordEncoder.encode(request.getPassword()))
-          .role(Role.EMPLOYER)
-          .build();
+
+      String employerName = request.getEmployerName();
+      Optional<Employer> employer = employerService.getEmployerByName(employerName);
+      Employer emp = new Employer();
+
+      if(employer.isPresent()) {
+        emp = employer.get();
+        int empId = emp.getId();
+
+        user = User.builder()
+            .firstname(request.getFirstname())
+            .lastname(request.getLastname())
+            .email(request.getEmail())
+            .password(passwordEncoder.encode(request.getPassword()))
+            .employerId(empId)
+            .role(Role.EMPLOYER)
+            .build();
+      }
     }
 
     var savedUser = repository.save(user);

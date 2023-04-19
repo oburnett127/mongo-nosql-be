@@ -2,6 +2,7 @@ package com.oburnett127.jobsearch.auth;
 
 import com.oburnett127.jobsearch.config.JwtService;
 import com.oburnett127.jobsearch.model.Employer;
+import com.oburnett127.jobsearch.repository.EmployerRepository;
 import com.oburnett127.jobsearch.service.EmployerService;
 import com.oburnett127.jobsearch.token.Token;
 import com.oburnett127.jobsearch.token.TokenRepository;
@@ -25,6 +26,7 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final EmployerService employerService;
+  private final EmployerRepository employerRepository;
 
   public AuthenticationResponse register(RegisterRequest request) {
     //Check to see if account with email already exists
@@ -49,20 +51,25 @@ public class AuthenticationService {
       String employerName = request.getEmployerName();
       Optional<Employer> employer = employerService.getEmployerByName(employerName);
       Employer emp = new Employer();
+      int empId = 0;
 
       if(employer.isPresent()) {
         emp = employer.get();
-        int empId = emp.getId();
-
-        user = User.builder()
-            .firstname(request.getFirstname())
-            .lastname(request.getLastname())
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .employerId(empId)
-            .role(Role.EMPLOYER)
-            .build();
+        empId = emp.getId();
+      } else {
+        empId = (int)employerRepository.count();
+        emp = new Employer(empId, employerName);
+        employerService.createEmployer(emp);
       }
+
+      user = User.builder()
+          .firstname(request.getFirstname())
+          .lastname(request.getLastname())
+          .email(request.getEmail())
+          .password(passwordEncoder.encode(request.getPassword()))
+          .employerId(empId)
+          .role(Role.EMPLOYER)
+          .build();
     }
 
     var savedUser = repository.save(user);

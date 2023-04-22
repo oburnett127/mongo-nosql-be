@@ -2,17 +2,22 @@ package com.oburnett127.jobsearch.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oburnett127.jobsearch.user.User;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class UserController {
 
-  private final AuthenticationService service;
+  private final UserService service;
 
   @PostMapping("/signup")
   public ResponseEntity<AuthenticationResponse> register(
@@ -26,5 +31,11 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request) {
     return ResponseEntity.ok(service.authenticate(request));
+  }
+
+  @GetMapping("/get/{email}")
+  public ResponseEntity<User> getAccount(@Validated @PathVariable String email) {
+      final var user = service.getUserByEmail(email);
+      return ResponseEntity.ok().body(user);
   }
 }

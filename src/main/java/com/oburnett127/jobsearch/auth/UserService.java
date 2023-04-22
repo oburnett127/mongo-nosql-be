@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class UserService {
   private final UserRepository repository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
@@ -39,8 +39,6 @@ public class AuthenticationService {
     if(request.getIsEmployer() == false) {
       System.out.println("role is: USER");
       user = User.builder()
-        .firstname(request.getFirstname())
-        .lastname(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
@@ -58,16 +56,14 @@ public class AuthenticationService {
         empId = emp.getId();
       } else {
         empId = (int)employerRepository.count();
-        emp = new Employer(empId, employerName);
+        emp = new Employer(empId + 1, employerName);
         employerService.createEmployer(emp);
       }
 
       user = User.builder()
-          .firstname(request.getFirstname())
-          .lastname(request.getLastname())
           .email(request.getEmail())
           .password(passwordEncoder.encode(request.getPassword()))
-          .employerId(empId)
+          .employerId(empId + 1)
           .role(Role.EMPLOYER)
           .build();
     }
@@ -117,5 +113,11 @@ public class AuthenticationService {
       token.setRevoked(true);
     });
     tokenRepository.saveAll(validUserTokens);
+  }
+
+  public User getUserByEmail(String emailAddress) {
+    Optional<User> user = repository.findByEmail(emailAddress);
+    User account = user.get();
+    return account;
   }
 }

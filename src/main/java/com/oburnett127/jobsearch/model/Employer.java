@@ -24,7 +24,7 @@ public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Basic(optional = false)
+    @Basic(optional = true)
     private String name;
 
     @Override

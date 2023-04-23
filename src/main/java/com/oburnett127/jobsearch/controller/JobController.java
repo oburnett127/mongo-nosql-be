@@ -1,6 +1,7 @@
 package com.oburnett127.jobsearch.controller;
 
 import com.oburnett127.jobsearch.model.*;
+import com.oburnett127.jobsearch.repository.EmployerRepository;
 import com.oburnett127.jobsearch.service.JobService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,15 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/job")
 public class JobController {
     private final JobService service;
+    private final EmployerRepository employerRepository;
 
-    public JobController(JobService service) {
+    public JobController(JobService service, EmployerRepository employerRepository) {
         this.service = service;
+        this.employerRepository = employerRepository;
     }
 
     @GetMapping("/list")
@@ -48,13 +52,22 @@ public class JobController {
     @PostMapping("/create")
     public ResponseEntity<Job> createJob(@Validated @RequestBody JobCreateRequest jobCreateRequest) throws IOException {
         System.out.println("inside createJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final var job = Job.builder()
-                .title(jobCreateRequest.getTitle())
-                .employer(jobCreateRequest.getEmployer())
-                .description(jobCreateRequest.getDescription())
-                .postDate(LocalDate.now().toString())
-                .build();
+        
+        int empId = jobCreateRequest.getEmployerId();
+        System.out.println("employer ID is: " + empId);
+
+        Optional<Employer> emp = employerRepository.findById(empId);
+        Employer employer = emp.get();
+
+        // if(emp.getName() == null) {
+        //     System.out.println("name of employer is null &&&&&&&&&&");
+        //     emp.setName("");
+        // }
+        
+        final var job = new Job(jobCreateRequest.getTitle(), employer, jobCreateRequest.getDescription(), LocalDate.now().toString()); 
+        System.out.println("after building job");
         service.createJob(job);
+        System.out.println("after calling createJob");
         return ResponseEntity.ok(job);
     }
 

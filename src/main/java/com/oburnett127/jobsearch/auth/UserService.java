@@ -115,9 +115,11 @@ public class UserService {
     tokenRepository.saveAll(validUserTokens);
   }
 
-  public User getUserByEmail(String emailAddress) {
+  public Employer getEmployerByEmail(String emailAddress) {
     Optional<User> user = repository.findByEmail(emailAddress);
     User account = user.get();
-    return account;
+    int empId = account.getEmployerId();
+    Optional<Employer> employer = employerRepository.findById(empId);
+    return employer.get();
   }
 }

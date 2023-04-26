@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.oburnett127.jobsearch.model.Employer;
-import com.oburnett127.jobsearch.user.User;
 
 @RestController
 @RequestMapping("/auth")

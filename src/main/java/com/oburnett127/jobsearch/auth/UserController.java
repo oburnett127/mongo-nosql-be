@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.oburnett127.jobsearch.model.Employer;
 import com.oburnett127.jobsearch.user.User;
 
@@ -34,10 +33,17 @@ public class UserController {
     return ResponseEntity.ok(service.authenticate(request));
   }
 
-  @GetMapping("/get/{email}")
+  @GetMapping("/getemployer/{email}")
   public ResponseEntity<Employer> getEmployerByEmail(@Validated @PathVariable String email) {
-      System.out.println("$$$$$$$$$$$$ inside getEmployerByEmail");
+      System.out.println("$$$$$$$$$$$$ ----------- inside getEmployerByEmail");
       final var employer = service.getEmployerByEmail(email);
       return ResponseEntity.ok().body(employer);
+  }
+
+  @GetMapping("/getuserid/{email}")
+  public ResponseEntity<Integer> getUserIdByEmail(@Validated @PathVariable String email) {
+      System.out.println("$$$$$$$$$$$$ ----------- inside getUserIdByEmail");
+      final var userId = service.getUserIdByEmail(email);
+      return ResponseEntity.ok().body(userId);
   }
 }

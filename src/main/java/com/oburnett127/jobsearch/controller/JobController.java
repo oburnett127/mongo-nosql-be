@@ -58,11 +58,6 @@ public class JobController {
 
         Optional<Employer> emp = employerRepository.findById(empId);
         Employer employer = emp.get();
-
-        // if(emp.getName() == null) {
-        //     System.out.println("name of employer is null &&&&&&&&&&");
-        //     emp.setName("");
-        // }
         
         final var job = new Job(jobCreateRequest.getTitle(), employer, jobCreateRequest.getDescription(), LocalDate.now().toString()); 
         System.out.println("after building job");
@@ -83,6 +78,13 @@ public class JobController {
     public ResponseEntity<Job> deleteJob(@Validated @PathVariable int id) throws IOException {
         System.out.println("inside deleteJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         service.deleteJob(id);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PostMapping("/apply")
+    public ResponseEntity<Job> applyJob(@Validated @RequestBody JobApplyRequest jobApplyRequest ) throws IOException {
+        System.out.println("inside applyJob() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        service.applyJob(jobApplyRequest);
         return ResponseEntity.ok().body(null);
     }
 }

@@ -2,7 +2,10 @@ package com.oburnett127.jobsearch.service;
 
 import com.oburnett127.jobsearch.model.JobUpdateRequest;
 import com.oburnett127.jobsearch.repository.JobRepository;
+import com.oburnett127.jobsearch.user.UserRepository;
 import com.oburnett127.jobsearch.model.Job;
+import com.oburnett127.jobsearch.model.JobApplyRequest;
+
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -13,9 +16,11 @@ import java.util.List;
 @Service
 public class JobService {
     private final JobRepository jobRepository;
+    private final UserRepository userRepository;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, UserRepository userRepository) {
         this.jobRepository = jobRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Job> listAll() {
@@ -66,4 +71,13 @@ public class JobService {
     }
 
     public void deleteJob(int id) { this.jobRepository.deleteById(id); }
+
+    public void applyJob(JobApplyRequest jobApplyRequest) {
+        var userId = jobApplyRequest.getUserId();
+        var jobId = jobApplyRequest.getJobId();
+        var user = userRepository.getReferenceById(userId);
+        var job = jobRepository.getReferenceById(jobId);
+        job.getApplicants().add(user);
+        user.getJobs().add(job);
+    }
 }

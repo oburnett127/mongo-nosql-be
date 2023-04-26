@@ -122,4 +122,10 @@ public class UserService {
     Optional<Employer> employer = employerRepository.findById(empId);
     return employer.get();
   }
+
+  public int getUserIdByEmail(String emailAddress) {
+    Optional<User> user = repository.findByEmail(emailAddress);
+    int userId = user.get().getId();
+    return userId;
+  }
 }

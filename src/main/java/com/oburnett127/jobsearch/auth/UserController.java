@@ -29,7 +29,7 @@ public class UserController {
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request) {
-    return ResponseEntity.ok(service.authenticate(request));
+      return ResponseEntity.ok(service.authenticate(request));
   }
 
   @GetMapping("/getemployer/{email}")

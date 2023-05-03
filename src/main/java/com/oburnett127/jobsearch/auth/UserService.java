@@ -115,6 +115,12 @@ public class UserService {
     tokenRepository.saveAll(validUserTokens);
   }
 
+  public Role getRoleByUserId(int userId) {
+    Optional<User> user = repository.findById(userId);
+    User account = user.get();
+    return account.getRole();
+  }
+
   public Employer getEmployerByEmail(String emailAddress) {
     Optional<User> user = repository.findByEmail(emailAddress);
     User account = user.get();

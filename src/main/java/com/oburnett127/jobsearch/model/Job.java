@@ -32,7 +32,7 @@ public class Job {
         private int id;
         @Basic(optional = false)
         private String title;
-        @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "employer_id")
         private Employer employer;
         @Basic(optional = false)

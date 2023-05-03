@@ -32,6 +32,12 @@ public class UserController {
       return ResponseEntity.ok(service.authenticate(request));
   }
 
+  @GetMapping("/getrole/{userId}")
+  public ResponseEntity<String> getRoleByUserId(@Validated @PathVariable int userId) {
+      final String role = service.getRoleByUserId(userId).toString();
+      return ResponseEntity.ok().body(role);
+  }
+
   @GetMapping("/getemployer/{email}")
   public ResponseEntity<Employer> getEmployerByEmail(@Validated @PathVariable String email) {
       System.out.println("$$$$$$$$$$$$ ----------- inside getEmployerByEmail");

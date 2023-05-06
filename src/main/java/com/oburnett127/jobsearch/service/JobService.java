@@ -78,8 +78,8 @@ public class JobService {
         var user = userRepository.getReferenceById(userId);
         var job = jobRepository.getReferenceById(jobId);
         System.out.println("userId: " + userId + ", jobId: " + jobId);
-        user.getJobs().add(job);
-        userRepository.save(user);
+        // user.getJobs().add(job);
+        // userRepository.save(user);
         job.getApplicants().add(user);
         jobRepository.save(job);
     }

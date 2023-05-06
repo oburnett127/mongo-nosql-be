@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.oburnett127.jobsearch.model.Employer;
+import com.oburnett127.jobsearch.user.User;
 
 @RestController
 @RequestMapping("/auth")
@@ -50,5 +52,12 @@ public class UserController {
       System.out.println("$$$$$$$$$$$$ ----------- inside getUserIdByEmail");
       final var userId = service.getUserIdByEmail(email);
       return ResponseEntity.ok().body(userId);
+  }
+
+  @GetMapping(value = "/getuser/{email}", produces = "application/json")
+  public ResponseEntity<User> getUserByEmail(@Validated @PathVariable String email) {
+    System.out.println("$$$$$$$$$$$$ ----------- inside getUserByEmail");
+    final var user = service.getUserByEmail(email);
+    return ResponseEntity.ok().body(user);
   }
 }

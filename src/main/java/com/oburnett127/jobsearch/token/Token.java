@@ -1,5 +1,6 @@
 package com.oburnett127.jobsearch.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.oburnett127.jobsearch.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,5 +37,6 @@ public class Token {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonIgnore
   public User user;
 }

@@ -134,4 +134,10 @@ public class UserService {
     int userId = user.get().getId();
     return userId;
   }
+
+  public User getUserByEmail(String emailAddress) {
+    Optional<User> user = repository.findByEmail(emailAddress);
+    if(user.get() != null) return user.get();
+    else return null;
+  }
 }

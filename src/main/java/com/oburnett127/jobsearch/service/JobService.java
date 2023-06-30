@@ -56,7 +56,6 @@ public class JobService {
         final var id = jobUpdateRequest.getId();
         final var title = jobUpdateRequest.getTitle();
         final var description = jobUpdateRequest.getDescription();
-
         final var job = this.jobRepository.getReferenceById(id);
 
         if(title.isBlank() || title == null || !title.matches("^[a-zA-Z0-9 ]*$")

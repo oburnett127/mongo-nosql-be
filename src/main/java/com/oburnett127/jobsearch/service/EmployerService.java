@@ -29,8 +29,7 @@ public class EmployerService {
 
     @SneakyThrows
     public Optional<Employer> getEmployerByName(String employerName) {
-        final Optional<Employer> employer = this.employerRepository.findByName(employerName);
-        return employer;
+        return employerRepository.findByName(employerName);
     }
 
     public void createEmployer(Employer employer) {

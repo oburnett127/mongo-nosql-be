@@ -45,25 +45,28 @@ public class UserService {
         .build();
     } else {
       System.out.println("role is: EMPLOYER");
-
       String employerName = request.getEmployerName();
       Optional<Employer> employer = employerService.getEmployerByName(employerName);
-      Employer emp = new Employer();
-      int empId = 0;
+      Employer emp;
+      int empId;
 
       if(employer.isPresent()) {
         emp = employer.get();
         empId = emp.getId();
+        System.out.println("employer is present - empId is: " + empId);
       } else {
-        empId = (int)employerRepository.count();
-        emp = new Employer(empId + 1, employerName);
+        empId = employerRepository.getMaxEmployerId() + 1;
+        System.out.println("generated empId: " + empId);
+        emp = new Employer(empId, employerName);
         employerService.createEmployer(emp);
       }
+
+      System.out.println(empId);
 
       user = User.builder()
           .email(request.getEmail())
           .password(passwordEncoder.encode(request.getPassword()))
-          .employerId(empId + 1)
+          .employerId(empId)
           .role(Role.EMPLOYER)
           .build();
     }
@@ -71,6 +74,7 @@ public class UserService {
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     saveUserToken(savedUser, jwtToken);
+
     return AuthenticationResponse.builder()
         .token(jwtToken)
         .build();

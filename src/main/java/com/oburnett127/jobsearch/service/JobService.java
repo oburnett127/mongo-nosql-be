@@ -1,10 +1,10 @@
 package com.oburnett127.jobsearch.service;
 
-import com.oburnett127.jobsearch.model.JobUpdateRequest;
 import com.oburnett127.jobsearch.repository.JobRepository;
-import com.oburnett127.jobsearch.user.UserRepository;
+import com.oburnett127.jobsearch.repository.UserRepository;
 import com.oburnett127.jobsearch.model.Job;
-import com.oburnett127.jobsearch.model.JobApplyRequest;
+import com.oburnett127.jobsearch.model.request.JobApplyRequest;
+import com.oburnett127.jobsearch.model.request.JobUpdateRequest;
 
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

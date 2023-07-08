@@ -1,8 +1,8 @@
 package com.oburnett127.jobsearch.controller;
 
 import com.oburnett127.jobsearch.model.Employer;
-import com.oburnett127.jobsearch.model.EmployerCreateRequest;
-import com.oburnett127.jobsearch.model.EmployerUpdateRequest;
+import com.oburnett127.jobsearch.model.request.EmployerCreateRequest;
+import com.oburnett127.jobsearch.model.request.EmployerUpdateRequest;
 import com.oburnett127.jobsearch.service.EmployerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

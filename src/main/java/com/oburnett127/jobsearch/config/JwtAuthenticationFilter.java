@@ -1,6 +1,5 @@
 package com.oburnett127.jobsearch.config;
 
-import com.oburnett127.jobsearch.token.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.oburnett127.jobsearch.repository.TokenRepository;
+import com.oburnett127.jobsearch.service.JwtService;
 
 @Component
 @RequiredArgsConstructor

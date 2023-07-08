@@ -1,7 +1,5 @@
-package com.oburnett127.jobsearch.user;
+package com.oburnett127.jobsearch.model;
 
-import com.oburnett127.jobsearch.model.Job;
-import com.oburnett127.jobsearch.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
@@ -43,7 +41,7 @@ public class User implements UserDetails {
   private String email;
   @Basic(optional = false)
   private String password;
-  @Basic(optional = false)
+  @Basic(optional = true)
   private Integer employerId;
   @Enumerated(EnumType.STRING)
   private Role role;

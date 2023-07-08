@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.model;
+package com.oburnett127.jobsearch.model.request;
 
 import lombok.Data;
 

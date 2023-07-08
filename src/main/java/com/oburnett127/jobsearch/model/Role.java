@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.user;
+package com.oburnett127.jobsearch.model;
 
 public enum Role {
 

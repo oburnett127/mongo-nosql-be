@@ -1,7 +1,7 @@
 package com.oburnett127.jobsearch.service;
 
 import com.oburnett127.jobsearch.model.Employer;
-import com.oburnett127.jobsearch.model.EmployerUpdateRequest;
+import com.oburnett127.jobsearch.model.request.EmployerUpdateRequest;
 import com.oburnett127.jobsearch.repository.EmployerRepository;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

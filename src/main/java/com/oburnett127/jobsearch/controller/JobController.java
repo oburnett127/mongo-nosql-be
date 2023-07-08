@@ -1,6 +1,10 @@
 package com.oburnett127.jobsearch.controller;
 
 import com.oburnett127.jobsearch.model.*;
+import com.oburnett127.jobsearch.model.dto.JobDto;
+import com.oburnett127.jobsearch.model.request.JobApplyRequest;
+import com.oburnett127.jobsearch.model.request.JobCreateRequest;
+import com.oburnett127.jobsearch.model.request.JobUpdateRequest;
 import com.oburnett127.jobsearch.repository.EmployerRepository;
 import com.oburnett127.jobsearch.service.JobService;
 import org.springframework.http.HttpStatus;

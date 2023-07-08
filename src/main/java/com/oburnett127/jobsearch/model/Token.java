@@ -1,7 +1,7 @@
-package com.oburnett127.jobsearch.token;
+package com.oburnett127.jobsearch.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.oburnett127.jobsearch.user.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

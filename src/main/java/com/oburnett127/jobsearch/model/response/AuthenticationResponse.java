@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.auth;
+package com.oburnett127.jobsearch.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

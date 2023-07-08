@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.auth;
+package com.oburnett127.jobsearch.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.oburnett127.jobsearch.model.Employer;
-import com.oburnett127.jobsearch.user.User;
+import com.oburnett127.jobsearch.model.User;
+import com.oburnett127.jobsearch.model.request.AuthenticationRequest;
+import com.oburnett127.jobsearch.model.request.RegisterRequest;
+import com.oburnett127.jobsearch.model.response.AuthenticationResponse;
+import com.oburnett127.jobsearch.service.UserService;
 
 @RestController
 @RequestMapping("/auth")

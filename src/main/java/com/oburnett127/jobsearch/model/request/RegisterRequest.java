@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.auth;
+package com.oburnett127.jobsearch.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class RegisterRequest {
   private String email;
   private String password;
+  private Boolean isEmployer;
+  private String employerName;
 }

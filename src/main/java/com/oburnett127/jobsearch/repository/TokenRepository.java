@@ -1,9 +1,11 @@
-package com.oburnett127.jobsearch.token;
+package com.oburnett127.jobsearch.repository;
 
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.oburnett127.jobsearch.model.Token;
 
 
 public interface TokenRepository extends JpaRepository<Token, Integer> {

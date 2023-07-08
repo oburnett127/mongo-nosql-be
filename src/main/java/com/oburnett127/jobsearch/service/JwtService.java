@@ -1,4 +1,4 @@
-package com.oburnett127.jobsearch.config;
+package com.oburnett127.jobsearch.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

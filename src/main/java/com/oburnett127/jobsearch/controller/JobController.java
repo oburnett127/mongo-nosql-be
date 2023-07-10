@@ -34,7 +34,7 @@ public class JobController {
 
         var result = jobs.stream()
                 .map(job -> new JobDto(job.getId(), job.getTitle(), job.getDescription(),
-                        job.getPostDate(), job.getEmployer().getName()))
+                        job.getPostDate(), job.getEmployer().getId(), job.getEmployer().getName()))
                 .collect(Collectors.toList());
 
         JobDto[] jobArray = result.toArray(new JobDto[0]);
@@ -48,7 +48,7 @@ public class JobController {
         final var job = service.getJob(Integer.parseInt(id));
 
         var result = new JobDto(job.getId(), job.getTitle(), job.getDescription(),
-                        job.getPostDate(), job.getEmployer().getName());
+                        job.getPostDate(), job.getEmployer().getId(), job.getEmployer().getName());
 
         return ResponseEntity.ok().body(result);
     }

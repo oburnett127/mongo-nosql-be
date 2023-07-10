@@ -9,5 +9,6 @@ public class JobDto {
         private String title;
         private String description;
         private String postDate;
+        private int employerId;
         private String employerName;
 }

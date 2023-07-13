@@ -1,18 +1,12 @@
 package com.oburnett127.jobsearch.model;
 
 import lombok.*;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.Hibernate;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Getter
@@ -27,20 +21,16 @@ public class Job {
         private int id;
         @Basic(optional = false)
         private String title;
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "employer_id")
-        private Employer employer;
+        @Basic(optional = false)
+        private int employerId;
         @Basic(optional = false)
         private String description;
         @Basic(optional = false)
         private String postDate;
 
-        @ManyToMany(mappedBy = "jobs")
-        private Set<User> applicants = new HashSet<>();
-
-        public Job(String title, Employer employer, String description, String postDate) {
+        public Job(String title, int employerId, String description, String postDate) {
                 this.title = title;
-                this.employer = employer;
+                this.employerId = employerId;
                 this.description = description;
                 this.postDate = postDate;
         }

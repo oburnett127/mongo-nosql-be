@@ -1,6 +1,5 @@
 package com.oburnett127.jobsearch.service;
 
-import com.oburnett127.jobsearch.model.Employer;
 import com.oburnett127.jobsearch.model.Role;
 import com.oburnett127.jobsearch.model.Token;
 import com.oburnett127.jobsearch.model.TokenType;
@@ -8,11 +7,12 @@ import com.oburnett127.jobsearch.model.User;
 import com.oburnett127.jobsearch.model.request.AuthenticationRequest;
 import com.oburnett127.jobsearch.model.request.RegisterRequest;
 import com.oburnett127.jobsearch.model.response.AuthenticationResponse;
-import com.oburnett127.jobsearch.repository.EmployerRepository;
 import com.oburnett127.jobsearch.repository.TokenRepository;
 import com.oburnett127.jobsearch.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,20 +22,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-  private final UserRepository repository;
+  private final UserRepository userRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
-  private final EmployerService employerService;
-  private final EmployerRepository employerRepository;
 
-  public AuthenticationResponse register(RegisterRequest request) {
-    //Check to see if account with email already exists
-    Optional<User> existingUser = repository.findByEmail(request.getEmail());
-    
-    if(existingUser.isPresent()) return null; 
-    
+  @SneakyThrows
+  public AuthenticationResponse register(RegisterRequest request, int empId) {
     var user = new User();
 
     if(request.getIsEmployer() == false) {
@@ -47,24 +41,6 @@ public class UserService {
         .build();
     } else {
       System.out.println("role is: EMPLOYER");
-      String employerName = request.getEmployerName();
-      Optional<Employer> employer = employerService.getEmployerByName(employerName);
-      Employer emp;
-      int empId;
-
-      if(employer.isPresent()) {
-        emp = employer.get();
-        empId = emp.getId();
-        System.out.println("employer is present - empId is: " + empId);
-      } else {
-        empId = employerRepository.getMaxEmployerId() + 1;
-        System.out.println("generated empId: " + empId);
-        emp = new Employer(empId, employerName);
-        employerService.createEmployer(emp);
-      }
-
-      System.out.println(empId);
-
       user = User.builder()
           .email(request.getEmail())
           .password(passwordEncoder.encode(request.getPassword()))
@@ -73,7 +49,7 @@ public class UserService {
           .build();
     }
 
-    var savedUser = repository.save(user);
+    var savedUser = userRepository.save(user);
     var jwtToken = jwtService.generateToken(user);
     saveUserToken(savedUser, jwtToken);
 
@@ -82,6 +58,7 @@ public class UserService {
         .build();
   }
 
+  @SneakyThrows
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -89,7 +66,7 @@ public class UserService {
             request.getPassword()
         )
     );
-    var user = repository.findByEmail(request.getEmail())
+    var user = userRepository.findByEmail(request.getEmail())
         .orElseThrow();
     var jwtToken = jwtService.generateToken(user);
     revokeAllUserTokens(user);
@@ -121,29 +98,22 @@ public class UserService {
     tokenRepository.saveAll(validUserTokens);
   }
 
+  @SneakyThrows
   public Role getRoleByUserId(int userId) {
-    Optional<User> user = repository.findById(userId);
+    Optional<User> user = userRepository.findById(userId);
     User account = user.get();
     return account.getRole();
   }
 
-  public Employer getEmployerByEmail(String emailAddress) {
-    Optional<User> user = repository.findByEmail(emailAddress);
-    User account = user.get();
-    int empId = account.getEmployerId();
-    Optional<Employer> employer = employerRepository.findById(empId);
-    return employer.get();
-  }
-
+  @SneakyThrows
   public int getUserIdByEmail(String emailAddress) {
-    Optional<User> user = repository.findByEmail(emailAddress);
+    Optional<User> user = userRepository.findByEmail(emailAddress);
     int userId = user.get().getId();
     return userId;
   }
 
-  public User getUserByEmail(String emailAddress) {
-    Optional<User> user = repository.findByEmail(emailAddress);
-    if(user.get() != null) return user.get();
-    else return null;
+  @SneakyThrows
+  public Optional<User> getUserByEmail(String emailAddress) {
+    return userRepository.findByEmail(emailAddress);
   }
 }

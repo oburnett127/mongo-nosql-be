@@ -1,6 +1,5 @@
 package com.oburnett127.jobsearch.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -8,12 +7,10 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,9 +44,6 @@ public class User implements UserDetails {
   private Role role;
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
-  @ManyToMany
-  @JsonIgnore
-  private Set<Job> jobs;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

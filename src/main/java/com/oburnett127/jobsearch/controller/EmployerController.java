@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employer")
@@ -25,11 +26,19 @@ public class EmployerController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Employer> getEmployer(@Validated @PathVariable String id) {
-        System.out.println("inside getEmployer() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final var employer = service.getEmployer(Integer.parseInt(id));
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<Employer> getEmployerById(@Validated @PathVariable String id) {
+        System.out.println("inside getEmployerById() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final var employer = service.getEmployerById(Integer.parseInt(id));
         return ResponseEntity.ok().body(employer);
+    }
+
+    @GetMapping("/getbyname/{name}")
+    public ResponseEntity<Employer> getEmployerByName(@Validated @PathVariable String name) {
+        System.out.println("inside getEmployerByName() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final Optional<Employer> employer = service.getEmployerByName(name);
+        if(employer.isPresent()) return ResponseEntity.ok().body(employer.get());
+        else return ResponseEntity.ok().body(null);
     }
 
     @PostMapping("/create")

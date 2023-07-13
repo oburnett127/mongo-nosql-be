@@ -17,14 +17,14 @@ public class EmployerService {
         this.employerRepository = employerRepository;
     }
 
+    @SneakyThrows
     public List<Employer> listAll() {
         return this.employerRepository.findAll();
     }
 
     @SneakyThrows
-    public Employer getEmployer(int id) {
-        final var employer = this.employerRepository.getReferenceById(id);
-        return employer;
+    public Employer getEmployerById(int id) {
+        return this.employerRepository.getReferenceById(id);
     }
 
     @SneakyThrows
@@ -32,6 +32,7 @@ public class EmployerService {
         return employerRepository.findByName(employerName);
     }
 
+    @SneakyThrows
     public void createEmployer(Employer employer) {
         this.employerRepository.save(employer);
     }
@@ -52,5 +53,11 @@ public class EmployerService {
         return employer;
     }
 
+    @SneakyThrows
     public void deleteEmployer(int id) { this.employerRepository.deleteById(id); }
+
+    @SneakyThrows
+    public int getMaxEmployerId() {
+       return employerRepository.getMaxEmployerId();
+    }
 }

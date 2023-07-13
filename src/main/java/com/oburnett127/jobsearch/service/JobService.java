@@ -1,11 +1,8 @@
 package com.oburnett127.jobsearch.service;
 
 import com.oburnett127.jobsearch.repository.JobRepository;
-import com.oburnett127.jobsearch.repository.UserRepository;
 import com.oburnett127.jobsearch.model.Job;
-import com.oburnett127.jobsearch.model.request.JobApplyRequest;
 import com.oburnett127.jobsearch.model.request.JobUpdateRequest;
-
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -16,26 +13,28 @@ import java.util.List;
 @Service
 public class JobService {
     private final JobRepository jobRepository;
-    private final UserRepository userRepository;
 
-    public JobService(JobRepository jobRepository, UserRepository userRepository) {
+    public JobService(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
-        this.userRepository = userRepository;
     }
 
+    @SneakyThrows
     public List<Job> listAll() {
         return this.jobRepository.findAll();
     }
 
+    @SneakyThrows
     public List<Job> findJobsWithSorting(String field){
         return jobRepository.findAll(Sort.by(Sort.Direction.ASC, field));
     }
 
+    @SneakyThrows
     public Page<Job> findJobsWithPagination(int offset, int pageSize){
         Page<Job> jobs = jobRepository.findAll(PageRequest.of(offset, pageSize));
         return jobs;
     }
 
+    @SneakyThrows
     public Page<Job> findJobsWithPaginationAndSorting(int offset, int pageSize, String field){
         Page<Job> jobs = jobRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));
         return jobs;
@@ -47,6 +46,7 @@ public class JobService {
         return job;
     }
 
+    @SneakyThrows
     public void createJob(Job job) {
         this.jobRepository.save(job);
     }
@@ -69,17 +69,6 @@ public class JobService {
         return job;
     }
 
+    @SneakyThrows
     public void deleteJob(int id) { this.jobRepository.deleteById(id); }
-
-    public void applyJob(JobApplyRequest jobApplyRequest) {
-        var userId = jobApplyRequest.getUserId();
-        var jobId = jobApplyRequest.getJobId();
-        var user = userRepository.getReferenceById(userId);
-        var job = jobRepository.getReferenceById(jobId);
-        System.out.println("userId: " + userId + ", jobId: " + jobId);
-        user.getJobs().add(job);
-        userRepository.save(user);
-        job.getApplicants().add(user);
-        jobRepository.save(job);
-    }
 }

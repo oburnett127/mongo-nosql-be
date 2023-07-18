@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.oburnett127</groupId>
-    <artifactId>jobsearch</artifactId>
+    <artifactId>socialmedia-be</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>jobsearch</name>
-    <description>jobsearch</description>
+    <name>socialmedia-be</name>
+    <description>socialmedia-be</description>
     <properties>
         <java.version>19</java.version>
     </properties>

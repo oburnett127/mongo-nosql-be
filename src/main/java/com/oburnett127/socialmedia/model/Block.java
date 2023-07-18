@@ -11,21 +11,22 @@ import jakarta.persistence.Table;
 
 @Getter
 @Setter
-@Builder
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "friend")
-public class Friend {
+@Table(name = "block")
+public class Block {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int friendId;
+    private int blockId;
     @Basic(optional = false)
-    private int fromUserId;
+    private int blockerUserId;
     @Basic(optional = false)
-    private int toUserId;
-    @Basic(optional = false)
-    private FriendStatus status;
+    private int blockedUserId;
+
+    public Block(int blockerUserId, int blockedUserId) {
+        this.blockerUserId = blockerUserId;
+        this.blockedUserId = blockedUserId;
+    }
 }

@@ -1,50 +1,56 @@
-package com.oburnett127.socialmedia.controller;
+// package com.oburnett127.socialmedia.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import com.oburnett127.socialmedia.model.Friend;
-import com.oburnett127.socialmedia.model.request.FriendCreateRequest;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.validation.annotation.Validated;
+// import org.springframework.web.bind.annotation.*;
+// import com.oburnett127.socialmedia.model.Friend;
+// import com.oburnett127.socialmedia.model.FriendStatus;
+// import com.oburnett127.socialmedia.model.request.RequestFriendRequest;
+// import com.oburnett127.socialmedia.service.FriendService;
 
-@RestController
-@RequestMapping("/friend")
-public class FriendController {
-    private final FriendService service;
+// import java.io.IOException;
+// import java.util.List;
+// import java.util.Optional;
 
-    public FriendController(FriendService service) {
-        this.service = service;
-    }
+// @RestController
+// @RequestMapping("/friend")
+// public class FriendController {
+//     private final FriendService service;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Friend>> view() {
-        final var result = service.listAll();
-        return ResponseEntity.ok().body(result);
-    }
+//     public FriendController(FriendService service) {
+//         this.service = service;
+//     }
 
-    @GetMapping("/getbyid/{id}")
-    public ResponseEntity<Friend> getFriendById(@Validated @PathVariable String id) {
-        System.out.println("inside getFriendById() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final var friend = service.getFriendById(Integer.parseInt(id));
-        return ResponseEntity.ok().body(friend);
-    }
+//     @GetMapping("/getbyuserid/{id}")
+//     public ResponseEntity<List<Friend>> getFriendsByUserId(@Validated @PathVariable String userId) {
+//         System.out.println("inside getFriendByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+//         final List<Friend> friends = service.getFriendsByUserId(Integer.parseInt(userId));
+//         return ResponseEntity.ok().body(friends);
+//     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Friend> createFriend(@Validated @RequestBody FriendCreateRequest friendCreateRequest) throws IOException {
-        System.out.println("inside createFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final var friend = Friend.builder()
-                .name(friendCreateRequest.getName())
-                .build();
-        service.createFriend(friend);
-        return ResponseEntity.ok(friend);
-    }
+//     @PostMapping("/request")
+//     public ResponseEntity<Friend> requestFriend(@Validated @RequestBody RequestFriendRequest requestFriendRequest) throws IOException {
+//         System.out.println("inside requestFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+//         final Friend friend = Friend.builder()
+//                 .fromUserId(requestFriendRequest.getFromUserId())
+//                 .toUserId(requestFriendRequest.getToUserId())
+//                 .status(FriendStatus.PENDING)
+//                 .build();
+//         service.requestFriend(friend);
+//         return ResponseEntity.ok(null);
+//     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<Friend> deleteFriend(@Validated @PathVariable int id) throws IOException {
-        System.out.println("inside deleteFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        service.deleteFriend(id);
-        return ResponseEntity.ok().body(null);
-    }
-}
+//     @PostMapping("/accept")
+//     public ResponseEntity<Friend> acceptFriend(@Validated @PathVariable int friendId) throws IOException {
+//         System.out.println("inside acceptFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+//         service.acceptFriend(friendId);
+//         return ResponseEntity.ok(null);
+//     }
+
+//     @PostMapping("/delete/{id}")
+//     public ResponseEntity<Friend> deleteFriend(@Validated @PathVariable int friendId) throws IOException {
+//         System.out.println("inside deleteFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+//         service.deleteFriend(friendId);
+//         return ResponseEntity.ok().body(null);
+//     }
+// }

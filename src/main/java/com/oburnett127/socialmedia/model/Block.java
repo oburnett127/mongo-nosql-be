@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
@@ -25,8 +27,8 @@ public class Block {
     @Basic(optional = false)
     private int blockedUserId;
 
-    public Block(int blockerUserId, int blockedUserId) {
-        this.blockerUserId = blockerUserId;
-        this.blockedUserId = blockedUserId;
-    }
+    // public Block(int blockerUserId, int blockedUserId) {
+    //     this.blockerUserId = blockerUserId;
+    //     this.blockedUserId = blockedUserId;
+    // }
 }

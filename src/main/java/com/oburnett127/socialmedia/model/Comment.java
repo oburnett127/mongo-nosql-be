@@ -10,8 +10,10 @@ import jakarta.persistence.Table;
 
 @Getter
 @Setter
-@ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "comment")

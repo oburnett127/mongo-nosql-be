@@ -24,7 +24,7 @@ public class PostController {
 
     @GetMapping("/getonepost/{postId}")
     public ResponseEntity<PostDto> getOnePost(@Validated @PathVariable int postId) {
-        System.out.println("inside getOnePost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        System.out.println("inside PostController.getOnePost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var post = service.getOnePost(postId);
         var result = new PostDto(postId, post.getUserId(), post.getText());
         return ResponseEntity.ok().body(result);
@@ -32,7 +32,7 @@ public class PostController {
 
     @GetMapping("/getbyjobid/{jobId}")
     public ResponseEntity<PostDto[]> getPostsByUserId(@Validated @PathVariable String userId) {
-        System.out.println("inside getPostByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        System.out.println("inside PostController.getPostByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         List<Post> posts = service.getPostsByUserId(Integer.parseInt(userId));
 
         var result = posts.stream()
@@ -46,7 +46,7 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@Validated @RequestBody PostCreateRequest postCreateRequest ) throws IOException {
-        System.out.println("inside createPost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        System.out.println("inside PostController.createPost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         service.createPost(postCreateRequest);
         return ResponseEntity.ok().body(null);
     }

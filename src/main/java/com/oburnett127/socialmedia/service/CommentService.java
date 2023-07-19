@@ -1,40 +1,31 @@
-// package com.oburnett127.socialmedia.service;
+package com.oburnett127.socialmedia.service;
 
-// import lombok.SneakyThrows;
-// import org.springframework.stereotype.Service;
-// import com.oburnett127.socialmedia.model.Post;
-// import com.oburnett127.socialmedia.model.request.PostCreateRequest;
-// import com.oburnett127.socialmedia.repository.PostRepository;
-// import java.util.List;
-// import java.util.Optional;
+import lombok.SneakyThrows;
+import org.springframework.stereotype.Service;
+import com.oburnett127.socialmedia.model.Comment;
+import com.oburnett127.socialmedia.repository.CommentRepository;
+import java.util.List;
 
-// @Service
-// public class CommentService {
-//     private final PostRepository postRepository;
+@Service
+public class CommentService {
+    private final CommentRepository commentRepository;
 
-//     public PostService(PostRepository postRepository) {
-//         this.postRepository = postRepository;
-//     }
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
-//     @SneakyThrows
-//     public Post getOnePost(int postId) {
-//         final Optional<Post> post = postRepository.findById(postId);
-//         if(post.isPresent()) return post.get();
-//         else return null;
-//     }
+    @SneakyThrows
+    public List<Comment> getCommentsByPostId(int postId) {
+        return commentRepository.findByPostId(postId);
+    }
 
-//     @SneakyThrows
-//     public List<Post> getPostsByUserId(int userId) {
-//         return postRepository.findByUserId(userId);
-//     }
+    @SneakyThrows
+    public void createComment(Comment comment) {
+        commentRepository.save(comment);   
+    }
 
-//     @SneakyThrows
-//     public void createPost(PostCreateRequest postCreateRequest) {
-//         final int userId = postCreateRequest.getUserId();
-//         final String postText = postCreateRequest.getText();
-//         // System.out.println("userId: " + userId);
-//         // System.out.println("post text: " + text);
-//         Post post = new Post(userId, postText);
-//         postRepository.save(post);   
-//     }
-// }
+    @SneakyThrows
+    public void deleteComment(int commentId) {
+        commentRepository.deleteById(commentId);
+    }
+}

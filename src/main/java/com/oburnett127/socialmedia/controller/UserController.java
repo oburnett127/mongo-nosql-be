@@ -10,7 +10,6 @@
 // import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RestController;
-
 // import com.oburnett127.socialmedia.model.Friend;
 // import com.oburnett127.socialmedia.model.User;
 // import com.oburnett127.socialmedia.model.request.AuthenticationRequest;
@@ -27,58 +26,40 @@
 
 //   @PostMapping("/signup")
 //   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+//     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.register");
 //     Optional<User> existingUser = userService.getUserByEmail(request.getEmail());
-
+    
 //     if(existingUser.isPresent()) return ResponseEntity.status(409).body(new AuthenticationResponse(null));
-
-//     int empId = 0;
-
-//     if(request.getIsEmployer()) {
-//       String employerName = request.getEmployerName();
-//       Optional<Friend> employer = employerService.getEmployerByName(employerName);
-//       Friend emp;
-      
-//       if(employer.isPresent()) {
-//         emp = employer.get();
-//         empId = emp.getId();
-//         System.out.println("employer is present - empId is: " + empId);
-//       } else {
-//         empId = employerService.getMaxEmployerId() + 1;
-//         System.out.println("generated empId: " + empId);
-//         emp = new Friend(empId, employerName);
-//         employerService.createEmployer(emp);
-//       }
-
-//       System.out.println(empId);
-//     }
-
-//     AuthenticationResponse response = userService.register(request, empId);
+    
+//     AuthenticationResponse response = userService.register(request);
     
 //     return ResponseEntity.status(200).body(response);
 //   }
 
 //   @PostMapping("/login")
 //   public ResponseEntity<AuthenticationResponse> authenticate(
-//       @RequestBody AuthenticationRequest request) {
-//       return ResponseEntity.ok(userService.authenticate(request));
+//     @RequestBody AuthenticationRequest request) {
+//     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.authenticate");
+//     return ResponseEntity.ok(userService.authenticate(request));
 //   }
 
 //   @GetMapping("/getrole/{userId}")
 //   public ResponseEntity<String> getRoleByUserId(@Validated @PathVariable int userId) {
-//       final String role = userService.getRoleByUserId(userId).toString();
-//       return ResponseEntity.ok().body(role);
+//     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getRoleByUserId");
+//     final String role = userService.getRoleByUserId(userId).toString();
+//     return ResponseEntity.ok().body(role);
 //   }
 
 //   @GetMapping("/getuserid/{email}")
 //   public ResponseEntity<Integer> getUserIdByEmail(@Validated @PathVariable String email) {
-//       System.out.println("$$$$$$$$$$$$ ----------- inside getUserIdByEmail");
-//       final var userId = userService.getUserIdByEmail(email);
-//       return ResponseEntity.ok().body(userId);
+//     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserIdByEmail");
+//     final var userId = userService.getUserIdByEmail(email);
+//     return ResponseEntity.ok().body(userId);
 //   }
 
 //   @GetMapping(value = "/getuser/{email}", produces = "application/json")
 //   public ResponseEntity<User> getUserByEmail(@Validated @PathVariable String email) {
-//     System.out.println("$$$$$$$$$$$$ ----------- inside getUserByEmail");
+//     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByEmail");
 //     final var user = userService.getUserByEmail(email);
 //     return ResponseEntity.ok().body(user.get());
 //   }

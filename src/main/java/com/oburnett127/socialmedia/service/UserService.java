@@ -2,12 +2,10 @@
 
 // import lombok.RequiredArgsConstructor;
 // import lombok.SneakyThrows;
-
 // import org.springframework.security.authentication.AuthenticationManager;
 // import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.stereotype.Service;
-
 // import com.oburnett127.socialmedia.model.Role;
 // import com.oburnett127.socialmedia.model.Token;
 // import com.oburnett127.socialmedia.model.TokenType;
@@ -17,8 +15,9 @@
 // import com.oburnett127.socialmedia.model.response.AuthenticationResponse;
 // import com.oburnett127.socialmedia.repository.TokenRepository;
 // import com.oburnett127.socialmedia.repository.UserRepository;
-
+// import java.util.List;
 // import java.util.Optional;
+// import java.util.stream.Collectors;
 
 // @Service
 // @RequiredArgsConstructor
@@ -116,5 +115,14 @@
 //   @SneakyThrows
 //   public Optional<User> getUserByEmail(String emailAddress) {
 //     return userRepository.findByEmail(emailAddress);
+//   }
+
+//   @SneakyThrows
+//   public List<User> getUsers(List<Integer> userIds) {
+//     return userIds.stream()
+//                 .map(userId -> userRepository.findById(userId))
+//                 .filter(Optional::isPresent)
+//                 .map(Optional::get)
+//                 .collect(Collectors.toList());
 //   }
 // }

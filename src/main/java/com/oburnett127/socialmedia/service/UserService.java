@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
   private final UserRepository userRepository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
@@ -105,6 +106,11 @@ public class UserService {
   }
 
   @SneakyThrows
+  public Optional<User> getUserByName(String name) {
+    return userRepository.findByName(name);
+  }
+
+  @SneakyThrows
   public List<User> getUsers(List<Integer> userIds) {
     return userIds.stream()
                 .map(userId -> userRepository.findById(userId))
@@ -112,4 +118,5 @@ public class UserService {
                 .map(Optional::get)
                 .collect(Collectors.toList());
   }
+  
 }

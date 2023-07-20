@@ -17,7 +17,7 @@ import com.oburnett127.socialmedia.model.response.AuthenticationResponse;
 import com.oburnett127.socialmedia.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -42,24 +42,32 @@ public class UserController {
     return ResponseEntity.ok(userService.authenticate(request));
   }
 
-  @GetMapping("/getrole/{userId}")
+  @GetMapping("/getrolebyuserid/{userId}")
   public ResponseEntity<String> getRoleByUserId(@Validated @PathVariable int userId) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getRoleByUserId");
     final String role = userService.getRoleByUserId(userId).toString();
     return ResponseEntity.ok().body(role);
   }
 
-  @GetMapping("/getuserid/{email}")
+  @GetMapping("/getuseridbyemail/{email}")
   public ResponseEntity<Integer> getUserIdByEmail(@Validated @PathVariable String email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserIdByEmail");
     final var userId = userService.getUserIdByEmail(email);
     return ResponseEntity.ok().body(userId);
   }
 
-  @GetMapping(value = "/getuser/{email}", produces = "application/json")
+  @GetMapping(value = "/getuserbyemail/{email}", produces = "application/json")
   public ResponseEntity<User> getUserByEmail(@Validated @PathVariable String email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByEmail");
     final var user = userService.getUserByEmail(email);
     return ResponseEntity.ok().body(user.get());
   }
+
+  @GetMapping(value = "/getuserbyname/{name}")
+  public ResponseEntity<User> getUserByName(@Validated @PathVariable String name) {
+    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByName");
+    final var user = userService.getUserByName(name);
+    return ResponseEntity.ok().body(user.get());
+  }
+  
 }

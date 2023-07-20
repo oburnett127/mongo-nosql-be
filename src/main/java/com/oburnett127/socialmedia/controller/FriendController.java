@@ -23,7 +23,7 @@ public class FriendController {
         this.userService = userService;
     }
 
-    @GetMapping("/getbyuserid/{id}")
+    @GetMapping("/getbyuserid/{userId}")
     public ResponseEntity<List<User>> getFriendsByUserId(@Validated @PathVariable String userId) {
         System.out.println("inside getFriendByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final List<Integer> friendUserIds = friendService.getFriendUserIds(Integer.parseInt(userId));
@@ -50,7 +50,7 @@ public class FriendController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/delete/{friendId}")
     public ResponseEntity<Friend> deleteFriend(@Validated @PathVariable int friendId) throws IOException {
         System.out.println("inside deleteFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         friendService.deleteFriend(friendId);

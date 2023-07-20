@@ -63,10 +63,10 @@ public class UserController {
     return ResponseEntity.ok().body(user.get());
   }
 
-  @GetMapping(value = "/getuserbyname/{name}")
-  public ResponseEntity<User> getUserByName(@Validated @PathVariable String name) {
-    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByName");
-    final var user = userService.getUserByName(name);
+  @GetMapping(value = "/getuserbyname/{fullName}")
+  public ResponseEntity<User> getUserByName(@Validated @PathVariable String fullName) {
+    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByfullName");
+    final var user = userService.getUserByfullName(fullName);
     return ResponseEntity.ok().body(user.get());
   }
   

@@ -3,10 +3,8 @@ package com.oburnett127.socialmedia.service;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Block;
-import com.oburnett127.socialmedia.model.request.BlockCreateRequest;
 import com.oburnett127.socialmedia.repository.BlockRepository;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BlockService {

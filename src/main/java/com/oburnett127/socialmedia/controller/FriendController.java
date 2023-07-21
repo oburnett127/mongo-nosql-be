@@ -31,6 +31,23 @@ public class FriendController {
         return ResponseEntity.ok().body(friendUsers);
     }
 
+    @GetMapping("/getoutgoingrequests/{fromUserId}")
+    public ResponseEntity<List<User>> getOutgoingRequestsByUserId(@Validated @PathVariable String fromUserId) {
+        System.out.println("inside getOutgoingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final List<Integer> toUserIds = friendService.getOutgoingRequestsByUserId(Integer.parseInt(fromUserId));
+        final List<User> requestUsers = userService.getUsers(toUserIds);
+        return ResponseEntity.ok().body(requestUsers);
+    }
+
+    @GetMapping("/getincomingrequests/{toUserId}")
+    public ResponseEntity<List<User>> getIncomingRequestsByUserId(@Validated @PathVariable String toUserId) {
+        System.out.println("inside getIncomingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final List<Integer> fromUserIds = friendService.getIncomingRequestsByUserId(Integer.parseInt(toUserId));
+        final List<User> requestUsers = userService.getUsers(fromUserIds);
+        return ResponseEntity.ok().body(requestUsers);
+    }
+
+
     @PostMapping("/request")
     public ResponseEntity<Friend> requestFriend(@Validated @RequestBody RequestFriendRequest requestFriendRequest) throws IOException {
         System.out.println("inside requestFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
@@ -43,7 +60,7 @@ public class FriendController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/accept")
+    @PostMapping("/accept/{friendId}")
     public ResponseEntity<Friend> acceptFriend(@Validated @PathVariable int friendId) throws IOException {
         System.out.println("inside acceptFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         friendService.acceptFriend(friendId);

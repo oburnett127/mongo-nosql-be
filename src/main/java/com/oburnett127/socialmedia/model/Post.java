@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity

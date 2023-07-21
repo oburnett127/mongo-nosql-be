@@ -8,9 +8,11 @@ import com.oburnett127.socialmedia.model.Friend;
 
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
 
-    @Query("SELECT f FROM Friend f WHERE f.fromUserId = :userId")
-    List<Friend> findByUserId(@Param("userId") int userId);
+    @Query("SELECT f FROM Friend f WHERE f.fromUserId = :fromUserId")
+    List<Friend> findByFromUserId(@Param("fromUserId") int fromUserId);
 
+    @Query("SELECT f FROM Friend f WHERE f.toUserId = :toUserId")
+    List<Friend> findByToUserId(@Param("toUserId") int toUserId);
 
 }
 

@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import com.oburnett127.socialmedia.model.Friend;
+import com.oburnett127.socialmedia.model.FriendStatus;
 import com.oburnett127.socialmedia.model.Post;
 import com.oburnett127.socialmedia.model.dto.PostDto;
 import com.oburnett127.socialmedia.model.request.PostCreateRequest;
@@ -30,7 +33,7 @@ public class PostController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/getbyjobid/{jobId}")
+    @GetMapping("/getbyuserid/{userId}")
     public ResponseEntity<PostDto[]> getPostsByUserId(@Validated @PathVariable String userId) {
         System.out.println("inside PostController.getPostByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         List<Post> posts = service.getPostsByUserId(Integer.parseInt(userId));
@@ -47,7 +50,11 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@Validated @RequestBody PostCreateRequest postCreateRequest ) throws IOException {
         System.out.println("inside PostController.createPost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        service.createPost(postCreateRequest);
+        final Post post = Post.builder()
+                .userId(postCreateRequest.getUserId())
+                .text(postCreateRequest.getText())
+                .build();
+        service.createPost(post);
         return ResponseEntity.ok().body(null);
     }
 }

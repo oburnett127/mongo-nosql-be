@@ -29,12 +29,7 @@ public class PostService {
     }
 
     @SneakyThrows
-    public void createPost(PostCreateRequest postCreateRequest) {
-        final int userId = postCreateRequest.getUserId();
-        final String postText = postCreateRequest.getText();
-        // System.out.println("userId: " + userId);
-        // System.out.println("post text: " + text);
-        Post post = new Post(userId, postText);
+    public void createPost(Post post) {
         postRepository.save(post);   
     }
 }

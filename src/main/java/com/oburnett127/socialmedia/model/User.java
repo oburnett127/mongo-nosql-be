@@ -41,8 +41,6 @@ public class User implements UserDetails {
   private String email;
   @Basic(optional = false)
   private String password;
-  @Basic(optional = true)
-  private Integer employerId;
   @Enumerated(EnumType.STRING)
   private Role role;
   @OneToMany(mappedBy = "user")

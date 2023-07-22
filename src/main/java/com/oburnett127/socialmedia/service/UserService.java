@@ -108,11 +108,21 @@ public class UserService {
   }
 
   @SneakyThrows
-  public Optional<User> getUserByfullName(String fullName) {
-    String[] names = fullName.split(" ");
-    String firstName = names[0];
-    String lastName = names[1];
-    return userRepository.findByfullName(firstName, lastName);
+  public List<User> getUserByName(String name) {
+    String[] nameParts = name.split(" ");
+
+    if(nameParts.length == 2) {
+      String firstName = nameParts[0];
+      String lastName = nameParts[1];
+      return userRepository.findByFullName(firstName, lastName);
+    } else if(nameParts.length == 1) {
+      String providedName = nameParts[0];
+      List<User> matchingUsers = userRepository.findByFirstName(providedName);
+      matchingUsers.addAll(userRepository.findByLastName(providedName));
+      return matchingUsers;
+    }
+
+    return null;
   }
 
   @SneakyThrows

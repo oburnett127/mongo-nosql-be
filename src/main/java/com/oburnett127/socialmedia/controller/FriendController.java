@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.oburnett127.socialmedia.model.Friend;
 import com.oburnett127.socialmedia.model.FriendStatus;
 import com.oburnett127.socialmedia.model.User;
+import com.oburnett127.socialmedia.model.request.DeleteFriendRequest;
 import com.oburnett127.socialmedia.model.request.RequestFriendRequest;
 import com.oburnett127.socialmedia.service.FriendService;
 import com.oburnett127.socialmedia.service.UserService;
@@ -67,10 +68,11 @@ public class FriendController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/delete/{friendId}")
-    public ResponseEntity<Friend> deleteFriend(@Validated @PathVariable int friendId) throws IOException {
+    @PostMapping("/delete")
+    public ResponseEntity<Friend> deleteFriend(@Validated @RequestBody DeleteFriendRequest deleteFriendRequest) throws IOException {
         System.out.println("inside deleteFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        friendService.deleteFriend(friendId);
+        friendService.deleteFriend(deleteFriendRequest.getUserId1(), deleteFriendRequest.getUserId2());
         return ResponseEntity.ok().body(null);
     }
+
 }

@@ -73,7 +73,16 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public void deleteFriend(int friendId) {
-        friendRepository.deleteById(friendId);
+    public void deleteFriend(int userId1, int userId2) {
+        Friend friend = friendRepository.findByFromUserIdAndToUserId(userId1, userId2);
+
+        if (friend != null) {
+            friendRepository.delete(friend);
+        } else {
+            friend = friendRepository.findByFromUserIdAndToUserId(userId2, userId1);
+            if (friend != null) {
+                friendRepository.delete(friend);
+            }
+        }
     }
 }

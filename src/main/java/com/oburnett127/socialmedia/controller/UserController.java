@@ -1,6 +1,8 @@
 package com.oburnett127.socialmedia.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -63,11 +65,11 @@ public class UserController {
     return ResponseEntity.ok().body(user.get());
   }
 
-  @GetMapping(value = "/getuserbyname/{fullName}")
-  public ResponseEntity<User> getUserByName(@Validated @PathVariable String fullName) {
-    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByfullName");
-    final var user = userService.getUserByfullName(fullName);
-    return ResponseEntity.ok().body(user.get());
+  @GetMapping(value = "/getusersbyname/{name}")
+  public ResponseEntity<List<User>> getUserByName(@Validated @PathVariable String name) {
+    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByName");
+    final List<User> users = userService.getUserByName(name);
+    return ResponseEntity.ok().body(users);
   }
   
 }

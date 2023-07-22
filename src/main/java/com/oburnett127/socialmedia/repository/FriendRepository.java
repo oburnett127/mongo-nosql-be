@@ -14,5 +14,6 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
     @Query("SELECT f FROM Friend f WHERE f.toUserId = :toUserId")
     List<Friend> findByToUserId(@Param("toUserId") int toUserId);
 
+    Friend findByFromUserIdAndToUserId(int fromUserId, int toUserId);
 }
 

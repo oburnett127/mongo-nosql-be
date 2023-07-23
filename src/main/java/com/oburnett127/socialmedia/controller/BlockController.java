@@ -28,6 +28,8 @@ public class BlockController {
     @PostMapping("/create")
     public ResponseEntity<Block> createBlock(@Validated @RequestBody BlockCreateRequest blockCreateRequest) throws IOException {
         System.out.println("inside BlockController.createBlock() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        System.out.println("blocker: " + blockCreateRequest.getBlockerUserId());
+        System.out.println("blocked: " + blockCreateRequest.getBlockedUserId());
         final Block block = Block.builder()
                 .blockerUserId(blockCreateRequest.getBlockerUserId())
                 .blockedUserId(blockCreateRequest.getBlockedUserId())

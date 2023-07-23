@@ -4,9 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import com.oburnett127.socialmedia.model.Friend;
-import com.oburnett127.socialmedia.model.FriendStatus;
 import com.oburnett127.socialmedia.model.Post;
 import com.oburnett127.socialmedia.model.dto.PostDto;
 import com.oburnett127.socialmedia.model.request.PostCreateRequest;

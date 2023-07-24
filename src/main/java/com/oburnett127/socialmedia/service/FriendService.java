@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Friend;
 import com.oburnett127.socialmedia.model.FriendStatus;
+import com.oburnett127.socialmedia.model.request.FriendStatusRequest;
+import com.oburnett127.socialmedia.model.request.RequestFriendRequest;
 import com.oburnett127.socialmedia.repository.FriendRepository;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,22 @@ public class FriendService {
 
     public FriendService(FriendRepository friendRepository) {
         this.friendRepository = friendRepository;
+    }
+
+    @SneakyThrows
+    public boolean getFriendStatus(FriendStatusRequest friendStatusRequest) {
+        //System.out.println("getFriendStatus method start: loggedInUID: " + friendStatusRequest.getLoggedInUserId()
+        // + " otherUID: " + friendStatusRequest.getOtherUserId());
+
+        Optional<Friend> friend = friendRepository.findByFromUserIdAndToUserId(friendStatusRequest.getLoggedInUserId(), 
+                                                                                    friendStatusRequest.getOtherUserId());
+        if(friend.isPresent() && friend.get().getStatus() == FriendStatus.FRIEND) return true;
+        else {
+            Optional<Friend> friendOpt = friendRepository.findByFromUserIdAndToUserId(friendStatusRequest.getOtherUserId(), 
+                                                                                    friendStatusRequest.getLoggedInUserId());
+            if(friendOpt.isPresent() && friendOpt.get().getStatus() == FriendStatus.FRIEND) return true;
+            else return false;
+        }
     }
 
     @SneakyThrows
@@ -63,8 +81,10 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public void acceptFriend(int friendId) {
-        Optional<Friend> friendOpt = friendRepository.findById(friendId);
+    public void acceptFriend(RequestFriendRequest requestFriendRequest) {
+        int fromUserId = requestFriendRequest.getFromUserId();
+        int toUserId = requestFriendRequest.getToUserId();
+        Optional<Friend> friendOpt = friendRepository.findByFromUserIdAndToUserId(fromUserId, toUserId);
         if(friendOpt.isPresent()) {
             Friend friend = friendOpt.get();
             friend.setStatus(FriendStatus.FRIEND);
@@ -74,14 +94,14 @@ public class FriendService {
 
     @SneakyThrows
     public void deleteFriend(int userId1, int userId2) {
-        Friend friend = friendRepository.findByFromUserIdAndToUserId(userId1, userId2);
+        Optional<Friend> friendOpt = friendRepository.findByFromUserIdAndToUserId(userId1, userId2);
 
-        if (friend != null) {
-            friendRepository.delete(friend);
+        if (friendOpt.isPresent()) {
+            friendRepository.delete(friendOpt.get());
         } else {
-            friend = friendRepository.findByFromUserIdAndToUserId(userId2, userId1);
-            if (friend != null) {
-                friendRepository.delete(friend);
+            friendOpt = friendRepository.findByFromUserIdAndToUserId(userId2, userId1);
+            if (friendOpt.isPresent()) {
+                friendRepository.delete(friendOpt.get());
             }
         }
     }

@@ -8,6 +8,7 @@ import com.oburnett127.socialmedia.model.FriendStatus;
 import com.oburnett127.socialmedia.model.User;
 import com.oburnett127.socialmedia.model.request.DeleteFriendRequest;
 import com.oburnett127.socialmedia.model.request.RequestFriendRequest;
+import com.oburnett127.socialmedia.model.request.FriendStatusRequest;
 import com.oburnett127.socialmedia.service.FriendService;
 import com.oburnett127.socialmedia.service.UserService;
 import java.io.IOException;
@@ -22,6 +23,14 @@ public class FriendController {
     public FriendController(FriendService friendService, UserService userService) {
         this.friendService = friendService;
         this.userService = userService;
+    }
+
+    @PostMapping("/getfriendstatus")
+    public ResponseEntity<Boolean> getFriendStatus(@Validated @RequestBody FriendStatusRequest friendStatusRequest) {
+        System.out.println("inside getFriendStatus() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final boolean friendStatus = friendService.getFriendStatus(friendStatusRequest);
+        System.out.println("friend stat is: " + friendStatus);
+        return ResponseEntity.ok().body(friendStatus);
     }
 
     @GetMapping("/getbyuserid/{userId}")
@@ -61,10 +70,10 @@ public class FriendController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/accept/{friendId}")
-    public ResponseEntity<Friend> acceptFriend(@Validated @PathVariable int friendId) throws IOException {
+    @PostMapping("/accept")
+    public ResponseEntity<Friend> acceptFriend(@Validated @RequestBody RequestFriendRequest requestFriendRequest) throws IOException {
         System.out.println("inside acceptFriend() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        friendService.acceptFriend(friendId);
+        friendService.acceptFriend(requestFriendRequest);
         return ResponseEntity.ok(null);
     }
 

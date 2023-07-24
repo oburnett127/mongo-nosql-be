@@ -8,6 +8,7 @@ import com.oburnett127.socialmedia.model.request.BlockCreateRequest;
 import com.oburnett127.socialmedia.service.BlockService;
 import java.io.IOException;
 import java.util.List;
+import com.oburnett127.socialmedia.model.request.BlockedStatusRequest;
 
 @RestController
 @RequestMapping("/block")
@@ -18,6 +19,14 @@ public class BlockController {
         this.service = service;
     }
 
+    @PostMapping("/getblockedstatus")
+    public ResponseEntity<Boolean> getBlockedStatus(@Validated @RequestBody BlockedStatusRequest blockedStatusRequest) {
+        System.out.println("inside BlockController.getBlockedStatus() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        final boolean blockedStatus = service.getBlockedStatus(blockedStatusRequest);
+        System.out.println("blocked stat is: " + blockedStatus);
+        return ResponseEntity.ok().body(blockedStatus);
+    }
+    
     @GetMapping("/getblocks/{blockerId}")
     public ResponseEntity<List<Block>> getBlocksByBlockerId(@Validated @PathVariable String blockerId) {
         System.out.println("inside BlockController.getBlockById() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
@@ -38,10 +47,10 @@ public class BlockController {
         return ResponseEntity.ok(block);
     }
 
-    @PostMapping("/delete/{blockId}")
-    public ResponseEntity<Block> deleteBlock(@Validated @PathVariable int blockId) throws IOException {
+    @PostMapping("/delete")
+    public ResponseEntity<Block> deleteBlock(@Validated @RequestBody BlockedStatusRequest blockedStatusRequest) throws IOException {
         System.out.println("inside BlockController.deleteBlock() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        service.deleteBlock(blockId);
+        service.deleteBlock(blockedStatusRequest);
         return ResponseEntity.ok().body(null);
     }
 }

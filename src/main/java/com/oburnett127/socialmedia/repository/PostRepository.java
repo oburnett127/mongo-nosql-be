@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.oburnett127.socialmedia.model.Post;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    List<Post> findByUserId(int userId);
+    List<Post> findByAuthorUserId(int userId);
+    List<Post> findByProfileUserId(int profileUserId);
 }

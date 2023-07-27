@@ -26,17 +26,31 @@ public class PostController {
     public ResponseEntity<PostDto> getOnePost(@Validated @PathVariable int postId) {
         System.out.println("inside PostController.getOnePost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var post = service.getOnePost(postId);
-        var result = new PostDto(postId, post.getUserId(), post.getText());
+        var result = new PostDto(postId, post.getAuthorUserId(), post.getProfileUserId(), post.getText());
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/getbyuserid/{userId}")
-    public ResponseEntity<PostDto[]> getPostsByUserId(@Validated @PathVariable String userId) {
-        System.out.println("inside PostController.getPostByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        List<Post> posts = service.getPostsByUserId(Integer.parseInt(userId));
+    @GetMapping("/getbyauthor/{authorUserId}")
+    public ResponseEntity<PostDto[]> getPostsByAuthorUserId(@Validated @PathVariable String userId) {
+        System.out.println("inside PostController.getPostsByAuthorUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        List<Post> posts = service.getPostsByAuthorUserId(Integer.parseInt(userId));
 
         var result = posts.stream()
-                    .map(post -> new PostDto(post.getPostId(), post.getUserId(), post.getText()))
+                    .map(post -> new PostDto(post.getPostId(), post.getAuthorUserId(), post.getProfileUserId(), post.getText()))
+                    .collect(Collectors.toList());
+
+        PostDto[] postArray = result.toArray(new PostDto[0]);                    
+
+        return new ResponseEntity<>(postArray, HttpStatus.OK);
+    }
+
+    @GetMapping("/getbyprofile/{id}")
+    public ResponseEntity<PostDto[]> getPostsByProfileUserId(@Validated @PathVariable String id) {
+        System.out.println("inside PostController.getPostsByProfileUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
+        List<Post> posts = service.getPostsByProfileUserId(Integer.parseInt(id));
+
+        var result = posts.stream()
+                    .map(post -> new PostDto(post.getPostId(), post.getAuthorUserId(), post.getProfileUserId(), post.getText()))
                     .collect(Collectors.toList());
 
         PostDto[] postArray = result.toArray(new PostDto[0]);                    
@@ -48,7 +62,8 @@ public class PostController {
     public ResponseEntity<Post> createPost(@Validated @RequestBody PostCreateRequest postCreateRequest ) throws IOException {
         System.out.println("inside PostController.createPost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final Post post = Post.builder()
-                .userId(postCreateRequest.getUserId())
+                .authorUserId(postCreateRequest.getAuthorUserId())
+                .profileUserId(postCreateRequest.getProfileUserId())
                 .text(postCreateRequest.getText())
                 .build();
         service.createPost(post);

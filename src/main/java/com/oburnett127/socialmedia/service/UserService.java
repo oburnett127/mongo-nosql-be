@@ -134,4 +134,8 @@ public class UserService {
                 .collect(Collectors.toList());
   }
   
+  @SneakyThrows
+  public Optional<User> getUserByUserId(int userId) {
+    return userRepository.findById(userId);
+  }
 }

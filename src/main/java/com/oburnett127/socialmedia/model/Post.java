@@ -22,12 +22,15 @@ public class Post {
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
         private int postId;
         @Basic(optional = false)
-        private int userId;
+        private int authorUserId;
+        @Basic(optional = false)
+        private int profileUserId;
         @Basic(optional = false)
         private String text;
 
-        public Post(int userId, String text) {
-                this.userId = userId;
+        public Post(int authorUserId, int profileUserId, String text) {
+                this.authorUserId = authorUserId;
+                this.profileUserId = profileUserId;
                 this.text = text;
         }
 }

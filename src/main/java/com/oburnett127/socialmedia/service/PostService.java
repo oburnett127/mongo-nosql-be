@@ -23,8 +23,13 @@ public class PostService {
     }
 
     @SneakyThrows
-    public List<Post> getPostsByUserId(int userId) {
-        return postRepository.findByUserId(userId);
+    public List<Post> getPostsByAuthorUserId(int authorUserId) {
+        return postRepository.findByAuthorUserId(authorUserId);
+    }
+
+    @SneakyThrows
+    public List<Post> getPostsByProfileUserId(int profileUserId) {
+        return postRepository.findByProfileUserId(profileUserId);
     }
 
     @SneakyThrows

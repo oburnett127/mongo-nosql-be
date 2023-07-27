@@ -71,5 +71,13 @@ public class UserController {
     final List<User> users = userService.getUserByName(name);
     return ResponseEntity.ok().body(users);
   }
+
+  @GetMapping(value = "/getuserbyuserid/{userId}")
+  public ResponseEntity<User> getUserByUserId(@Validated @PathVariable int userId) {
+    System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByUserId");
+    final Optional<User> user = userService.getUserByUserId(userId);
+    if(user.isPresent()) return ResponseEntity.ok().body(user.get());
+    else return ResponseEntity.ok().body(null);
+  }
   
 }

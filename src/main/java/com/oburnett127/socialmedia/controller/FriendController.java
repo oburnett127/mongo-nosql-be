@@ -37,7 +37,7 @@ public class FriendController {
     @GetMapping("/getbyuserid/{userId}")
     public ResponseEntity<List<User>> getFriendsByUserId(@Validated @PathVariable ObjectId userId) {
         System.out.println("inside getFriendByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> friendUserIds = friendService.getFriendUserIds(userId);
+        final List<ObjectId> friendUserIds = friendService.getFriendUserIds(userId);
         final List<User> friendUsers = userService.getUsers(friendUserIds);
         return ResponseEntity.ok().body(friendUsers);
     }
@@ -45,7 +45,7 @@ public class FriendController {
     @GetMapping("/getoutgoingrequests/{fromUserId}")
     public ResponseEntity<List<User>> getOutgoingRequestsByUserId(@Validated @PathVariable ObjectId fromUserId) {
         System.out.println("inside getOutgoingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> toUserIds = friendService.getOutgoingRequestsByUserId(fromUserId);
+        final List<ObjectId> toUserIds = friendService.getOutgoingRequestsByUserId(fromUserId);
         final List<User> requestUsers = userService.getUsers(toUserIds);
         return ResponseEntity.ok().body(requestUsers);
     }
@@ -53,7 +53,7 @@ public class FriendController {
     @GetMapping("/getincomingrequests/{toUserId}")
     public ResponseEntity<List<User>> getIncomingRequestsByUserId(@Validated @PathVariable ObjectId toUserId) {
         System.out.println("inside getIncomingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> fromUserIds = friendService.getIncomingRequestsByUserId(toUserId);
+        final List<ObjectId> fromUserIds = friendService.getIncomingRequestsByUserId(toUserId);
         final List<User> requestUsers = userService.getUsers(fromUserIds);
         return ResponseEntity.ok().body(requestUsers);
     }

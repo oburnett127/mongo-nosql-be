@@ -9,12 +9,12 @@ import org.bson.types.ObjectId;
 
 public interface UserRepository extends MongoRepository<User, ObjectId> {
   
-  Optional<User> findByEmail(ObjectId email);
+  Optional<User> findByEmail(String email);
 
-  List<User> findByFirstNameAndLastName(@Param("firstName") ObjectId firstName, @Param("lastName") ObjectId lastName);
+  List<User> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
-  List<User> findByFirstName(@Param("firstName") ObjectId firstName);
+  List<User> findByFirstName(@Param("firstName") String firstName);
   
-  List<User> findByLastName(@Param("lastName") ObjectId lastName);
+  List<User> findByLastName(@Param("lastName") String lastName);
 
 }

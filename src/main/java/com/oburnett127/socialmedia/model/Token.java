@@ -1,44 +1,27 @@
 package com.oburnett127.socialmedia.model;
 
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 import org.bson.types.ObjectId;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Document(collection = "token")
 public class Token {
-  @Id
-  @GeneratedValue
-  public Integer id;
+    @Id
+    public ObjectId id;
 
-  @Column(unique = true)
-  public ObjectId token;
+    public String token;
 
-  @Enumerated(EnumType.STRING)
-  public TokenType tokenType = TokenType.BEARER;
+    public TokenType tokenType = TokenType.BEARER;
 
-  public boolean revoked;
+    public boolean revoked;
 
-  public boolean expired;
+    public boolean expired;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  @JsonIgnore
-  public User user;
+    public User user; 
+
 }

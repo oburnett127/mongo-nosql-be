@@ -8,5 +8,5 @@ import lombok.Data;
 public class CommentCreateRequest {
     private ObjectId postId;
     private ObjectId userId;
-    private ObjectId text;
+    private String text;
 }

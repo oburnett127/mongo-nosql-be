@@ -1,15 +1,9 @@
 package com.oburnett127.socialmedia.model;
 
 import lombok.*;
-
 import org.bson.types.ObjectId;
-
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
@@ -18,22 +12,21 @@ import jakarta.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
-@Table(name = "post")
+@Document(collection = "post")
 public class Post {
         @Id
-        @GeneratedValue(strategy =  GenerationType.IDENTITY)
         private ObjectId postId;
-        @Basic(optional = false)
-        private ObjectId authorUserId;
-        @Basic(optional = false)
-        private ObjectId profileUserId;
-        @Basic(optional = false)
-        private ObjectId text;
 
-        public Post(ObjectId authorUserId, ObjectId profileUserId, ObjectId text) {
+        private ObjectId authorUserId;
+
+        private ObjectId profileUserId;
+        
+        private String text;
+
+        public Post(ObjectId authorUserId, ObjectId profileUserId, String text) {
                 this.authorUserId = authorUserId;
                 this.profileUserId = profileUserId;
                 this.text = text;
         }
+        
 }

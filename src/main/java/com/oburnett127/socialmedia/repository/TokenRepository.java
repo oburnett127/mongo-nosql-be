@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TokenRepository extends MongoRepository<Token, ObjectId> {
 
     @Query("{'user.id': ?0, $or: [{'expired': false}, {'revoked': false}]}")
-    List<Token> findAllValidTokenByUser(String userId);
+    List<Token> findAllValidTokenByUserId(ObjectId userId);
 
     Optional<Token> findByToken(String token);
 }

@@ -1,11 +1,12 @@
 package com.oburnett127.socialmedia;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication
-@EnableMongoRepositories
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class SocialmediaApplication {
 
     public static void main(String[] args) {

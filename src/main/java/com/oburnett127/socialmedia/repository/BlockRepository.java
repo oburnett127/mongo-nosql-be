@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 
 public interface BlockRepository extends MongoRepository<Block, ObjectId> {
 
-    List<Block> findByBlockerId(@Param("blockerUserId") ObjectId blockerUserId);
+    List<Block> findByBlockerUserId(@Param("blockerUserId") ObjectId blockerUserId);
 
     Optional<Block> findByBlockerUserIdAndBlockedUserId(@Param("blockerUserId") ObjectId blockerUserId,
                                                  @Param("blockedUserId") ObjectId blockedUserId);

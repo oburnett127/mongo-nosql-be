@@ -1,6 +1,5 @@
 package com.oburnett127.socialmedia.config;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,7 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/auth/**", "/job/**", "/employer/**")
+        .requestMatchers("/user/**", "/block/**", "/comment/**", "/friend/**", "/post/**")
           .permitAll()
         .anyRequest()
           .permitAll()

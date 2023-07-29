@@ -28,7 +28,7 @@ public class BlockService {
 
     @SneakyThrows
     public List<Block> getBlocksByBlockerId(ObjectId userId) {
-        return blockRepository.findByBlockerId(userId);
+        return blockRepository.findByBlockerUserId(userId);
     }
 
     @SneakyThrows

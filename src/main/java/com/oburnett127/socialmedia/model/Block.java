@@ -1,13 +1,9 @@
 package com.oburnett127.socialmedia.model;
 
 import lombok.*;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Getter
@@ -17,15 +13,13 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
-@Table(name = "block")
+@Document(collection = "block")
 public class Block {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ObjectId blockId;
-    @Basic(optional = false)
+    private ObjectId id;
+
     private ObjectId blockerUserId;
-    @Basic(optional = false)
+    
     private ObjectId blockedUserId;
 
     // public Block(ObjectId blockerUserId, ObjectId blockedUserId) {

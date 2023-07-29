@@ -8,5 +8,5 @@ import lombok.Data;
 public class PostCreateRequest {
     private ObjectId authorUserId;
     private ObjectId profileUserId;
-    private ObjectId text;
+    private String text;
 }

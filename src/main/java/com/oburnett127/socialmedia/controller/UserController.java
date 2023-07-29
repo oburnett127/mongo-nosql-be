@@ -47,28 +47,28 @@ public class UserController {
   }
 
   @GetMapping("/getrolebyuserid/{userId}")
-  public ResponseEntity<ObjectId> getRoleByUserId(@Validated @PathVariable ObjectId userId) {
+  public ResponseEntity<String> getRoleByUserId(@Validated @PathVariable ObjectId userId) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getRoleByUserId");
-    final ObjectId role = userService.getRoleByUserId(userId);
+    final String role = userService.getRoleByUserId(userId).toString();
     return ResponseEntity.ok().body(role);
   }
 
   @GetMapping("/getuseridbyemail/{email}")
-  public ResponseEntity<ObjectId> getUserIdByEmail(@Validated @PathVariable ObjectId email) {
+  public ResponseEntity<ObjectId> getUserIdByEmail(@Validated @PathVariable String email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserIdByEmail");
     final var userId = userService.getUserIdByEmail(email);
     return ResponseEntity.ok().body(userId);
   }
 
   @GetMapping(value = "/getuserbyemail/{email}", produces = "application/json")
-  public ResponseEntity<User> getUserByEmail(@Validated @PathVariable ObjectId email) {
+  public ResponseEntity<User> getUserByEmail(@Validated @PathVariable String email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByEmail");
     final var user = userService.getUserByEmail(email);
     return ResponseEntity.ok().body(user.get());
   }
 
   @GetMapping(value = "/getusersbyname/{name}")
-  public ResponseEntity<List<User>> getUserByName(@Validated @PathVariable ObjectId name) {
+  public ResponseEntity<List<User>> getUserByName(@Validated @PathVariable String name) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByName");
     final List<User> users = userService.getUserByName(name);
     return ResponseEntity.ok().body(users);

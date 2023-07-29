@@ -10,5 +10,5 @@ public class PostDto {
         private ObjectId postId;
         private ObjectId authorUserId;
         private ObjectId profileUserId;
-        private ObjectId text;
+        private String text;
 }

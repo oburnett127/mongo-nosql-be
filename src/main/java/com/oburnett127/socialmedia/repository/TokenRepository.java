@@ -1,21 +1,17 @@
 package com.oburnett127.socialmedia.repository;
 
-import java.util.List;
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import com.oburnett127.socialmedia.model.Token;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import java.util.List;
+import java.util.Optional;
 
-public interface TokenRepository extends JpaRepository<Token, Integer> {
+public interface TokenRepository extends MongoRepository<Token, ObjectId> {
 
-  @Query(value = """
-      select t from Token t inner join User u\s
-      on t.user.id = u.id\s
-      where u.id = :id and (t.expired = false or t.revoked = false)\s
-      """)
-  List<Token> findAllValidTokenByUser(Integer id);
+    @Query("{'user.id': ?0, $or: [{'expired': false}, {'revoked': false}]}")
+    List<Token> findAllValidTokenByUser(String userId);
 
-  Optional<Token> findByToken(String token);
+    Optional<Token> findByToken(String token);
 }

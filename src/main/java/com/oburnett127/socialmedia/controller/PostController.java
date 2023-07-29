@@ -1,5 +1,6 @@
 package com.oburnett127.socialmedia.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +24,7 @@ public class PostController {
     }
 
     @GetMapping("/getonepost/{postId}")
-    public ResponseEntity<PostDto> getOnePost(@Validated @PathVariable int postId) {
+    public ResponseEntity<PostDto> getOnePost(@Validated @PathVariable ObjectId postId) {
         System.out.println("inside PostController.getOnePost() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         final var post = service.getOnePost(postId);
         var result = new PostDto(postId, post.getAuthorUserId(), post.getProfileUserId(), post.getText());
@@ -31,9 +32,9 @@ public class PostController {
     }
 
     @GetMapping("/getbyauthor/{authorUserId}")
-    public ResponseEntity<PostDto[]> getPostsByAuthorUserId(@Validated @PathVariable String userId) {
+    public ResponseEntity<PostDto[]> getPostsByAuthorUserId(@Validated @PathVariable ObjectId userId) {
         System.out.println("inside PostController.getPostsByAuthorUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        List<Post> posts = service.getPostsByAuthorUserId(Integer.parseInt(userId));
+        List<Post> posts = service.getPostsByAuthorUserId(userId);
 
         var result = posts.stream()
                     .map(post -> new PostDto(post.getPostId(), post.getAuthorUserId(), post.getProfileUserId(), post.getText()))
@@ -45,9 +46,9 @@ public class PostController {
     }
 
     @GetMapping("/getbyprofile/{id}")
-    public ResponseEntity<PostDto[]> getPostsByProfileUserId(@Validated @PathVariable String id) {
+    public ResponseEntity<PostDto[]> getPostsByProfileUserId(@Validated @PathVariable ObjectId id) {
         System.out.println("inside PostController.getPostsByProfileUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        List<Post> posts = service.getPostsByProfileUserId(Integer.parseInt(id));
+        List<Post> posts = service.getPostsByProfileUserId(id);
 
         var result = posts.stream()
                     .map(post -> new PostDto(post.getPostId(), post.getAuthorUserId(), post.getProfileUserId(), post.getText()))

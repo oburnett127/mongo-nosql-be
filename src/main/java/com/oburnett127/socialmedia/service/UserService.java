@@ -2,6 +2,8 @@ package com.oburnett127.socialmedia.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+
+import org.bson.types.ObjectId;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,7 +68,7 @@ public class UserService {
         .build();
   }
 
-  private void saveUserToken(User user, String jwtToken) {
+  private void saveUserToken(User user, ObjectId jwtToken) {
     var token = Token.builder()
         .user(user)
         .token(jwtToken)
@@ -89,34 +91,34 @@ public class UserService {
   }
 
   @SneakyThrows
-  public Role getRoleByUserId(int userId) {
+  public Role getRoleByUserId(ObjectId userId) {
     Optional<User> user = userRepository.findById(userId);
     User account = user.get();
     return account.getRole();
   }
 
   @SneakyThrows
-  public int getUserIdByEmail(String emailAddress) {
+  public ObjectId getUserIdByEmail(ObjectId emailAddress) {
     Optional<User> user = userRepository.findByEmail(emailAddress);
-    int userId = user.get().getId();
+    ObjectId userId = user.get().getId();
     return userId;
   }
 
   @SneakyThrows
-  public Optional<User> getUserByEmail(String emailAddress) {
+  public Optional<User> getUserByEmail(ObjectId emailAddress) {
     return userRepository.findByEmail(emailAddress);
   }
 
   @SneakyThrows
-  public List<User> getUserByName(String name) {
-    String[] nameParts = name.split(" ");
+  public List<User> getUserByName(ObjectId name) {
+    ObjectId[] nameParts = name.split(" ");
 
     if(nameParts.length == 2) {
-      String firstName = nameParts[0];
-      String lastName = nameParts[1];
+      ObjectId firstName = nameParts[0];
+      ObjectId lastName = nameParts[1];
       return userRepository.findByFullName(firstName, lastName);
     } else if(nameParts.length == 1) {
-      String providedName = nameParts[0];
+      ObjectId providedName = nameParts[0];
       List<User> matchingUsers = userRepository.findByFirstName(providedName);
       matchingUsers.addAll(userRepository.findByLastName(providedName));
       return matchingUsers;
@@ -135,7 +137,7 @@ public class UserService {
   }
   
   @SneakyThrows
-  public Optional<User> getUserByUserId(int userId) {
+  public Optional<User> getUserByUserId(ObjectId userId) {
     return userRepository.findById(userId);
   }
 }

@@ -1,6 +1,8 @@
 package com.oburnett127.socialmedia.service;
 
 import lombok.SneakyThrows;
+
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Block;
 import com.oburnett127.socialmedia.model.request.BlockedStatusRequest;
@@ -25,7 +27,7 @@ public class BlockService {
     }
 
     @SneakyThrows
-    public List<Block> getBlocksByBlockerId(int userId) {
+    public List<Block> getBlocksByBlockerId(ObjectId userId) {
         return blockRepository.findByBlockerId(userId);
     }
 

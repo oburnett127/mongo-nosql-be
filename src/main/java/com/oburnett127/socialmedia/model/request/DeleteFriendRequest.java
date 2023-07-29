@@ -1,9 +1,11 @@
 package com.oburnett127.socialmedia.model.request;
 
+import org.bson.types.ObjectId;
+
 import lombok.Data;
 
 @Data
 public class DeleteFriendRequest {
-  private int userId1;
-  private int userId2;
+  private ObjectId userId1;
+  private ObjectId userId2;
 }

@@ -1,10 +1,12 @@
 package com.oburnett127.socialmedia.model.request;
 
+import org.bson.types.ObjectId;
+
 import lombok.Data;
 
 @Data
 public class PostCreateRequest {
-    private int authorUserId;
-    private int profileUserId;
-    private String text;
+    private ObjectId authorUserId;
+    private ObjectId profileUserId;
+    private ObjectId text;
 }

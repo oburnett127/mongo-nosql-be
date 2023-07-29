@@ -1,5 +1,7 @@
 package com.oburnett127.socialmedia.model.request;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-  private String email;
-  private String password;
-  private String firstName;
-  private String lastName;
+  private ObjectId email;
+  private ObjectId password;
+  private ObjectId firstName;
+  private ObjectId lastName;
 }

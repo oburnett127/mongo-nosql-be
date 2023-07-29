@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.oburnett127</groupId>
-    <artifactId>socialmedia-be</artifactId>
+    <artifactId>socialmediamongo-be</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>socialmedia-be</name>
-    <description>socialmedia-be</description>
+    <name>socialmediamongo-be</name>
+    <description>socialmediamongo-be</description>
     <properties>
         <java.version>19</java.version>
     </properties>
@@ -57,11 +57,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-            <scope>runtime</scope>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

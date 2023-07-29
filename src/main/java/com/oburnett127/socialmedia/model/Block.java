@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.bson.types.ObjectId;
 
 
 @Getter
@@ -21,13 +22,13 @@ import jakarta.persistence.Table;
 public class Block {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int blockId;
+    private ObjectId blockId;
     @Basic(optional = false)
-    private int blockerUserId;
+    private ObjectId blockerUserId;
     @Basic(optional = false)
-    private int blockedUserId;
+    private ObjectId blockedUserId;
 
-    // public Block(int blockerUserId, int blockedUserId) {
+    // public Block(ObjectId blockerUserId, ObjectId blockedUserId) {
     //     this.blockerUserId = blockerUserId;
     //     this.blockedUserId = blockedUserId;
     // }

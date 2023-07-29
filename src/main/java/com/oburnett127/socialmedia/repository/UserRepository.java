@@ -2,21 +2,19 @@ package com.oburnett127.socialmedia.repository;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import com.oburnett127.socialmedia.model.User;
+import org.bson.types.ObjectId;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends MongoRepository<User, ObjectId> {
   
-  Optional<User> findByEmail(String email);
+  Optional<User> findByEmail(ObjectId email);
 
-  @Query("SELECT u FROM User u WHERE u.firstName = :firstName AND u.lastName = :lastName")
-  List<User> findByFullName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+  List<User> findByFirstNameAndLastName(@Param("firstName") ObjectId firstName, @Param("lastName") ObjectId lastName);
 
-  @Query("SELECT u FROM User u WHERE u.firstName = :firstName")
-  List<User> findByFirstName(@Param("firstName") String firstName);
+  List<User> findByFirstName(@Param("firstName") ObjectId firstName);
   
-  @Query("SELECT u FROM User u WHERE u.lastName = :lastName")
-  List<User> findByLastName(@Param("lastName") String lastName);
+  List<User> findByLastName(@Param("lastName") ObjectId lastName);
+
 }

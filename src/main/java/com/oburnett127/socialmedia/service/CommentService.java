@@ -1,6 +1,8 @@
 package com.oburnett127.socialmedia.service;
 
 import lombok.SneakyThrows;
+
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Comment;
 import com.oburnett127.socialmedia.repository.CommentRepository;
@@ -15,7 +17,7 @@ public class CommentService {
     }
 
     @SneakyThrows
-    public List<Comment> getCommentsByPostId(int postId) {
+    public List<Comment> getCommentsByPostId(ObjectId postId) {
         return commentRepository.findByPostId(postId);
     }
 
@@ -25,7 +27,7 @@ public class CommentService {
     }
 
     @SneakyThrows
-    public void deleteComment(int commentId) {
+    public void deleteComment(ObjectId commentId) {
         commentRepository.deleteById(commentId);
     }
 }

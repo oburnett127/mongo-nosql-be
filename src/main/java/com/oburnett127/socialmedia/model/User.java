@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.bson.types.ObjectId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,15 +34,15 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue
-  private Integer id;
+  private ObjectId id;
   @Basic(optional = false)
-  private String firstName;
+  private ObjectId firstName;
   @Basic(optional = false)
-  private String lastName;
+  private ObjectId lastName;
   @Basic(optional = false)
-  private String email;
+  private ObjectId email;
   @Basic(optional = false)
-  private String password;
+  private ObjectId password;
   @Enumerated(EnumType.STRING)
   private Role role;
   @OneToMany(mappedBy = "user")
@@ -52,12 +54,12 @@ public class User implements UserDetails {
   }
 
   @Override
-  public String getPassword() {
+  public ObjectId getPassword() {
     return password;
   }
 
   @Override
-  public String getUsername() {
+  public ObjectId getUsername() {
     return email;
   }
 

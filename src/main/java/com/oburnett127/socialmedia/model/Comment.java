@@ -1,6 +1,9 @@
 package com.oburnett127.socialmedia.model;
 
 import lombok.*;
+
+import org.bson.types.ObjectId;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,15 +23,15 @@ import jakarta.persistence.Table;
 public class Comment {
         @Id
         @GeneratedValue(strategy =  GenerationType.IDENTITY)
-        private int commentId;
+        private ObjectId commentId;
         @Basic(optional = false)
-        private int postId;
+        private ObjectId postId;
         @Basic(optional = false)
-        private int userId;
+        private ObjectId userId;
         @Basic(optional = false)
-        private String text;
+        private ObjectId text;
 
-        public Comment(int postId, int userId, String text) {
+        public Comment(ObjectId postId, ObjectId userId, ObjectId text) {
                 this.postId = postId;
                 this.userId = userId;
                 this.text = text;

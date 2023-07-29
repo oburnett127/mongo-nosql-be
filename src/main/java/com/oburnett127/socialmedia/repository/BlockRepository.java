@@ -2,18 +2,16 @@ package com.oburnett127.socialmedia.repository;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import com.oburnett127.socialmedia.model.Block;
+import org.bson.types.ObjectId;
 
-public interface BlockRepository extends JpaRepository<Block, Integer> {
+public interface BlockRepository extends MongoRepository<Block, ObjectId> {
 
-    @Query(value = "SELECT b FROM Block b WHERE b.blockerUserId = :blockerUserId")
-    List<Block> findByBlockerId(@Param("blockerUserId") int blockerUserId);
+    List<Block> findByBlockerId(@Param("blockerUserId") ObjectId blockerUserId);
 
-    Optional<Block> findByBlockerUserIdAndBlockedUserId(@Param("blockerUserId") int blockerUserId,
-                                                 @Param("blockedUserId") int blockedUserId);
+    Optional<Block> findByBlockerUserIdAndBlockedUserId(@Param("blockerUserId") ObjectId blockerUserId,
+                                                 @Param("blockedUserId") ObjectId blockedUserId);
     
 }

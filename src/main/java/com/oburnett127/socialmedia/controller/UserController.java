@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,35 +47,35 @@ public class UserController {
   }
 
   @GetMapping("/getrolebyuserid/{userId}")
-  public ResponseEntity<String> getRoleByUserId(@Validated @PathVariable int userId) {
+  public ResponseEntity<ObjectId> getRoleByUserId(@Validated @PathVariable ObjectId userId) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getRoleByUserId");
-    final String role = userService.getRoleByUserId(userId).toString();
+    final ObjectId role = userService.getRoleByUserId(userId);
     return ResponseEntity.ok().body(role);
   }
 
   @GetMapping("/getuseridbyemail/{email}")
-  public ResponseEntity<Integer> getUserIdByEmail(@Validated @PathVariable String email) {
+  public ResponseEntity<ObjectId> getUserIdByEmail(@Validated @PathVariable ObjectId email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserIdByEmail");
     final var userId = userService.getUserIdByEmail(email);
     return ResponseEntity.ok().body(userId);
   }
 
   @GetMapping(value = "/getuserbyemail/{email}", produces = "application/json")
-  public ResponseEntity<User> getUserByEmail(@Validated @PathVariable String email) {
+  public ResponseEntity<User> getUserByEmail(@Validated @PathVariable ObjectId email) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByEmail");
     final var user = userService.getUserByEmail(email);
     return ResponseEntity.ok().body(user.get());
   }
 
   @GetMapping(value = "/getusersbyname/{name}")
-  public ResponseEntity<List<User>> getUserByName(@Validated @PathVariable String name) {
+  public ResponseEntity<List<User>> getUserByName(@Validated @PathVariable ObjectId name) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByName");
     final List<User> users = userService.getUserByName(name);
     return ResponseEntity.ok().body(users);
   }
 
   @GetMapping(value = "/getuserbyuserid/{userId}")
-  public ResponseEntity<User> getUserByUserId(@Validated @PathVariable int userId) {
+  public ResponseEntity<User> getUserByUserId(@Validated @PathVariable ObjectId userId) {
     System.out.println("$$$$$$$$$$$$ ----------- inside UserController.getUserByUserId");
     final Optional<User> user = userService.getUserByUserId(userId);
     if(user.isPresent()) return ResponseEntity.ok().body(user.get());

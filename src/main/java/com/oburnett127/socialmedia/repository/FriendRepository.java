@@ -2,22 +2,18 @@ package com.oburnett127.socialmedia.repository;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import com.oburnett127.socialmedia.model.Friend;
+import org.bson.types.ObjectId;
 
-public interface FriendRepository extends JpaRepository<Friend, Integer> {
+public interface FriendRepository extends MongoRepository<Friend, ObjectId> {
 
-    @Query("SELECT f FROM Friend f WHERE f.fromUserId = :fromUserId")
-    List<Friend> findByFromUserId(@Param("fromUserId") int fromUserId);
+    List<Friend> findByFromUserId(@Param("fromUserId") ObjectId fromUserId);
 
-    @Query("SELECT f FROM Friend f WHERE f.toUserId = :toUserId")
-    List<Friend> findByToUserId(@Param("toUserId") int toUserId);
+    List<Friend> findByToUserId(@Param("toUserId") ObjectId toUserId);
 
-    @Query("SELECT f FROM Friend f WHERE f.fromUserId = :fromUserId AND f.toUserId = :toUserId")
-    Optional<Friend> findByFromUserIdAndToUserId(@Param("fromUserId") int fromUserId, @Param("toUserId") int toUserId);
+    Optional<Friend> findByFromUserIdAndToUserId(@Param("fromUserId") ObjectId fromUserId, @Param("toUserId") ObjectId toUserId);
     
 }
 

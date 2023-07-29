@@ -1,6 +1,8 @@
 package com.oburnett127.socialmedia.service;
 
 import lombok.SneakyThrows;
+
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Friend;
 import com.oburnett127.socialmedia.model.FriendStatus;
@@ -36,16 +38,16 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public List<Integer> getFriendUserIds(int userId) {
+    public List<ObjectId> getFriendUserIds(ObjectId userId) {
         List<Friend> friendRecs = friendRepository.findByFromUserId(userId);
         friendRecs.addAll(friendRepository.findByToUserId(userId));
 
-        List<Integer> friendUserIds = friendRecs.stream()
+        List<ObjectId> friendUserIds = friendRecs.stream()
                                 .filter(friend -> friend.getFromUserId() == userId && friend.getStatus() == FriendStatus.FRIEND)
                                 .map(friend -> friend.getToUserId())
                                 .collect(Collectors.toList());
 
-        List<Integer> friendFromUserIds = friendRecs.stream()
+        List<ObjectId> friendFromUserIds = friendRecs.stream()
                                 .filter(friend -> friend.getToUserId() == userId && friend.getStatus() == FriendStatus.FRIEND)
                                 .map(friend -> friend.getFromUserId())
                                 .collect(Collectors.toList());
@@ -56,7 +58,7 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public List<Integer> getOutgoingRequestsByUserId(int fromUserId) {
+    public List<ObjectId> getOutgoingRequestsByUserId(ObjectId fromUserId) {
         List<Friend> friendRecs = friendRepository.findByFromUserId(fromUserId);
 
         return  friendRecs.stream()
@@ -66,7 +68,7 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public List<Integer> getIncomingRequestsByUserId(int toUserId) {
+    public List<ObjectId> getIncomingRequestsByUserId(ObjectId toUserId) {
         List<Friend> friendRecs = friendRepository.findByToUserId(toUserId);
 
         return  friendRecs.stream()
@@ -82,8 +84,8 @@ public class FriendService {
 
     @SneakyThrows
     public void acceptFriend(RequestFriendRequest requestFriendRequest) {
-        int fromUserId = requestFriendRequest.getFromUserId();
-        int toUserId = requestFriendRequest.getToUserId();
+        ObjectId fromUserId = requestFriendRequest.getFromUserId();
+        ObjectId toUserId = requestFriendRequest.getToUserId();
         Optional<Friend> friendOpt = friendRepository.findByFromUserIdAndToUserId(fromUserId, toUserId);
         if(friendOpt.isPresent()) {
             Friend friend = friendOpt.get();
@@ -93,7 +95,7 @@ public class FriendService {
     }
 
     @SneakyThrows
-    public void deleteFriend(int userId1, int userId2) {
+    public void deleteFriend(ObjectId userId1, ObjectId userId2) {
         Optional<Friend> friendOpt = friendRepository.findByFromUserIdAndToUserId(userId1, userId2);
 
         if (friendOpt.isPresent()) {

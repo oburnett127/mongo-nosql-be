@@ -1,5 +1,7 @@
 package com.oburnett127.socialmedia.model;
 
+import org.bson.types.ObjectId;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -26,7 +28,7 @@ public class Token {
   public Integer id;
 
   @Column(unique = true)
-  public String token;
+  public ObjectId token;
 
   @Enumerated(EnumType.STRING)
   public TokenType tokenType = TokenType.BEARER;

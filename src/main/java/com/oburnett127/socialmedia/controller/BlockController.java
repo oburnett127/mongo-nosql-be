@@ -1,5 +1,6 @@
 package com.oburnett127.socialmedia.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,9 @@ public class BlockController {
     }
     
     @GetMapping("/getblocks/{blockerId}")
-    public ResponseEntity<List<Block>> getBlocksByBlockerId(@Validated @PathVariable String blockerId) {
+    public ResponseEntity<List<Block>> getBlocksByBlockerId(@Validated @PathVariable ObjectId blockerId) {
         System.out.println("inside BlockController.getBlockById() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Block> blocks = service.getBlocksByBlockerId(Integer.parseInt(blockerId));
+        final List<Block> blocks = service.getBlocksByBlockerId(blockerId);
         return ResponseEntity.ok().body(blocks);
     }
 

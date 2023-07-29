@@ -1,5 +1,7 @@
 package com.oburnett127.socialmedia.model.request;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FriendStatusRequest {
-    private int loggedInUserId;
-    private int otherUserId;
+    private ObjectId loggedInUserId;
+    private ObjectId otherUserId;
 }

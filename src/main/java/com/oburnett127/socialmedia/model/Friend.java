@@ -1,6 +1,9 @@
 package com.oburnett127.socialmedia.model;
 
 import lombok.*;
+
+import org.bson.types.ObjectId;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,11 +24,11 @@ import jakarta.persistence.Table;
 public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int friendId;
+    private ObjectId friendId;
     @Basic(optional = false)
-    private int fromUserId;
+    private ObjectId fromUserId;
     @Basic(optional = false)
-    private int toUserId;
+    private ObjectId toUserId;
     @Basic(optional = false)
     private FriendStatus status;
 }

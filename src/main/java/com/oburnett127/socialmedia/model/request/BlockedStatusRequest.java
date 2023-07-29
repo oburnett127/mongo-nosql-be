@@ -1,5 +1,7 @@
 package com.oburnett127.socialmedia.model.request;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlockedStatusRequest {
-    private int blockerUserId;
-    private int blockedUserId;
+    private ObjectId blockerUserId;
+    private ObjectId blockedUserId;
 }

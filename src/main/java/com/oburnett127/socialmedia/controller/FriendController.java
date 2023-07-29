@@ -1,5 +1,6 @@
 package com.oburnett127.socialmedia.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,25 +35,25 @@ public class FriendController {
     }
 
     @GetMapping("/getbyuserid/{userId}")
-    public ResponseEntity<List<User>> getFriendsByUserId(@Validated @PathVariable String userId) {
+    public ResponseEntity<List<User>> getFriendsByUserId(@Validated @PathVariable ObjectId userId) {
         System.out.println("inside getFriendByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> friendUserIds = friendService.getFriendUserIds(Integer.parseInt(userId));
+        final List<Integer> friendUserIds = friendService.getFriendUserIds(userId);
         final List<User> friendUsers = userService.getUsers(friendUserIds);
         return ResponseEntity.ok().body(friendUsers);
     }
 
     @GetMapping("/getoutgoingrequests/{fromUserId}")
-    public ResponseEntity<List<User>> getOutgoingRequestsByUserId(@Validated @PathVariable String fromUserId) {
+    public ResponseEntity<List<User>> getOutgoingRequestsByUserId(@Validated @PathVariable ObjectId fromUserId) {
         System.out.println("inside getOutgoingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> toUserIds = friendService.getOutgoingRequestsByUserId(Integer.parseInt(fromUserId));
+        final List<Integer> toUserIds = friendService.getOutgoingRequestsByUserId(fromUserId);
         final List<User> requestUsers = userService.getUsers(toUserIds);
         return ResponseEntity.ok().body(requestUsers);
     }
 
     @GetMapping("/getincomingrequests/{toUserId}")
-    public ResponseEntity<List<User>> getIncomingRequestsByUserId(@Validated @PathVariable String toUserId) {
+    public ResponseEntity<List<User>> getIncomingRequestsByUserId(@Validated @PathVariable ObjectId toUserId) {
         System.out.println("inside getIncomingRequestsByUserId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Integer> fromUserIds = friendService.getIncomingRequestsByUserId(Integer.parseInt(toUserId));
+        final List<Integer> fromUserIds = friendService.getIncomingRequestsByUserId(toUserId);
         final List<User> requestUsers = userService.getUsers(fromUserIds);
         return ResponseEntity.ok().body(requestUsers);
     }

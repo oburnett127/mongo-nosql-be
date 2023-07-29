@@ -1,5 +1,6 @@
 package com.oburnett127.socialmedia.controller;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,9 @@ public class CommentController {
     }
 
     @GetMapping("/getbypost/{postId}")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@Validated @PathVariable String postId) {
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@Validated @PathVariable ObjectId postId) {
         System.out.println("inside CommentController.getCommentsByPostId() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
-        final List<Comment> comments = service.getCommentsByPostId(Integer.parseInt(postId));
+        final List<Comment> comments = service.getCommentsByPostId(postId);
         return ResponseEntity.ok().body(comments);
     }
 
@@ -38,7 +39,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete/{commentId}")
-    public ResponseEntity<Comment> deleteComment(@Validated @PathVariable int commentId) throws IOException {
+    public ResponseEntity<Comment> deleteComment(@Validated @PathVariable ObjectId commentId) throws IOException {
         System.out.println("inside CommentController.deleteComment() $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ --------------------");
         service.deleteComment(commentId);
         return ResponseEntity.ok().body(null);

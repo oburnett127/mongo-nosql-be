@@ -1,6 +1,8 @@
 package com.oburnett127.socialmedia.service;
 
 import lombok.SneakyThrows;
+
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import com.oburnett127.socialmedia.model.Post;
 import com.oburnett127.socialmedia.repository.PostRepository;
@@ -16,19 +18,19 @@ public class PostService {
     }
 
     @SneakyThrows
-    public Post getOnePost(int postId) {
+    public Post getOnePost(ObjectId postId) {
         final Optional<Post> post = postRepository.findById(postId);
         if(post.isPresent()) return post.get();
         else return null;
     }
 
     @SneakyThrows
-    public List<Post> getPostsByAuthorUserId(int authorUserId) {
+    public List<Post> getPostsByAuthorUserId(ObjectId authorUserId) {
         return postRepository.findByAuthorUserId(authorUserId);
     }
 
     @SneakyThrows
-    public List<Post> getPostsByProfileUserId(int profileUserId) {
+    public List<Post> getPostsByProfileUserId(ObjectId profileUserId) {
         return postRepository.findByProfileUserId(profileUserId);
     }
 
